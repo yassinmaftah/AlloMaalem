@@ -30,7 +30,7 @@ class AuthController extends Controller
         Auth::login($user);
         return redirect()->route('dashboard');
     }
-
+ 
     public function showLogin(){return view('auth.login');}
 
     public function login(Request $request)
