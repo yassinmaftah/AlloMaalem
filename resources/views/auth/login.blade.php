@@ -16,7 +16,7 @@
                 "Finding a trusted Maalem has never been easier. Build your home with confidence."
             </p>
         </div>
- 
+
         <div class="p-8 md:p-12 flex flex-col justify-center">
             <div class="text-center mb-8">
                 <h1 class="text-2xl font-bold text-gray-800">Sign In</h1>
@@ -44,6 +44,15 @@
                     @error('password')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
+                </div>
+
+                <div class="flex items-center justify-between mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" name="remember" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                    </label>
+
+                    <a href="#" class="text-sm text-blue-600 hover:text-blue-900">Forgot Password?</a>
                 </div>
 
                 <button type="submit" class="w-full bg-blue-900 text-white py-3 rounded-lg font-bold hover:bg-blue-800 transition">
