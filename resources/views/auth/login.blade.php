@@ -59,7 +59,7 @@
                     Login
                 </button>
             </form>
-
+ 
             <p class="text-center mt-6 text-gray-600">
                 New here? <a href="{{ route('register') }}" class="text-blue-700 font-bold hover:underline">Create Account</a>
             </p>
