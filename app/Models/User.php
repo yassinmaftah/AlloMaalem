@@ -27,6 +27,7 @@ class User extends Authenticatable
         'avatar',
         'bio',
         'speciality',
+        'info_done',
         'is_verified',
     ];
     /**
