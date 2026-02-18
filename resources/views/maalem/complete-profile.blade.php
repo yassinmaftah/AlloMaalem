@@ -11,17 +11,26 @@
 
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">My Speciality</label>
-                <input type="text" name="speciality" class="w-full border p-2 rounded" placeholder="Plumber, Electrician..." >
+                <input type="text" name="speciality" class="w-full border p-2 rounded" placeholder="Plumber, Electrician..." value="{{ old('speciality') }}">
+                @error('speciality')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">About Me (Bio)</label>
-                <textarea name="bio" rows="3" class="w-full border p-2 rounded" placeholder="Tell clients about your experience..."></textarea>
+                <textarea name="bio" rows="3" class="w-full border p-2 rounded" placeholder="Tell clients about your experience...">{{ old('bio') }}</textarea>
+                @error('bio')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">Phone Number</label>
-                <input type="text" name="phone" class="w-full border p-2 rounded" placeholder="06XXXXXXXX" >
+                <input type="text" name="phone" class="w-full border p-2 rounded" placeholder="06XXXXXXXX" value="{{ old('phone') }}">
+                @error('phone')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="mb-4">
@@ -32,11 +41,17 @@
                     <option value="Rabat">Rabat</option>
                     <option value="Marrakech">Marrakech</option>
                 </select>
+                @error('city')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="mb-6">
                 <label class="block text-gray-700 font-bold mb-2">Profile Picture</label>
                 <input type="file" name="avatar" class="w-full border p-2 rounded">
+                @error('avatar')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
