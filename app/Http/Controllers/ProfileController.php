@@ -32,17 +32,33 @@ class ProfileController extends Controller
             $validated = $request->validate([
                 'phone'  => 'required|string|max:20',
                 'city'   => 'required|string|max:50',
-                'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Max 2MB
-            ]);
+                'avatar' => 'nullable|image|mimes:png,jpg|max:2048', // 2048 =  2MB
+            ],
+            [
+                'phone.required' => 'Please enter your phone number so maalem can contact you.',
+                'city.required' => 'Please select your city.',
+                'avatar.image' => 'The file must be an image (png or jpg).',
+                'avatar.max'   => 'The image is too large. Max size is 2MB.',
+            ]
+            );
         } else
         {
             $validated = $request->validate([
                 'phone'      => 'required|string|max:20',
                 'city'       => 'required|string|max:50',
-                'avatar'     => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'avatar'     => 'nullable|image|mimes:png,jpg|max:2048',
                 'bio'        => 'required|string|max:500',
                 'speciality' => 'required|string|max:100',
-            ]);
+            ],
+            [
+                'phone.required'      => 'Please enter your phone number so clients can contact you.',
+                'city.required'       => 'Please select your city.',
+                'avatar.image'        => 'The file must be an image (png or jpg).',
+                'avatar.max'          => 'The image is too large. Max size is 2MB.',
+                'bio.required'        => 'Please tell us a little about your experience.',
+                'speciality.required' => 'Please enter your speciality (e.g., Plumber).',
+            ]
+            );
         }
 
         if ($request->hasFile('avatar')) {
