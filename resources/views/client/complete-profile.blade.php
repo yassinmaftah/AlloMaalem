@@ -11,7 +11,10 @@
 
             <div class="mb-4">
                 <label class="block text-gray-700 font-bold mb-2">Phone Number</label>
-                <input type="text" name="phone" class="w-full border p-2 rounded" placeholder="06XXXXXXXX" >
+                <input type="text" name="phone" class="w-full border p-2 rounded" placeholder="06XXXXXXXX" value="{{ old('phone') }}" >
+                @error('phone')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="mb-4">
@@ -24,11 +27,17 @@
                     <option value="Tangier">Tangier</option>
                     <option value="Agadir">Agadir</option>
                 </select>
+                @error('city')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="mb-6">
                 <label class="block text-gray-700 font-bold mb-2">Profile Picture</label>
                 <input type="file" name="avatar" class="w-full border p-2 rounded">
+                @error('avatar')
+                    <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
