@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="p-10 text-center">
-    <h1 class="text-3xl font-bold text-red-600">👮 Admin Dashboard</h1>
-    <p class="mt-4">Welcome, {{ Auth::user()->name }}!</p>
+    <h1 class="text-3xl font-bold text-red-600">Admin Dashboard</h1>
+    <p class="mt-4">{{ Auth::user()->name }}!</p>
 
     <form action="{{ route('logout') }}" method="POST" class="mt-10">
         @csrf
