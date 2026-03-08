@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ClientJobController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
@@ -41,9 +42,17 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'role:client'])->group(function () {
+
     Route::get('/client/dashboard', function () {
         return view('client.dashboard');
     })->name('client.dashboard');
+
+    Route::prefix('client/jobs')->name('client.jobs.')->group(function () {
+        Route::get('/', [ClientJobController::class, 'index'])->name('index');
+        Route::get('/create', [ClientJobController::class, 'create'])->name('create');
+        Route::get('/{id}', [ClientJobController::class, 'show'])->name('show');
+    });
+
 });
 
 Route::middleware(['auth', 'role:maalem'])->group(function () {
