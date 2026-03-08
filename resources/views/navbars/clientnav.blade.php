@@ -6,8 +6,9 @@
 
             <div class="hidden md:flex items-center space-x-6">
                 <a href="{{ route('client.dashboard') }}" class="hover:text-blue-200 font-medium transition">Dashboard</a>
-                <a href="#" class="hover:text-blue-200 font-medium transition">My Jobs</a>
-                <a href="#" class="bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded-md font-bold transition">+ Post a Job</a>
+
+                <a href="{{ route('client.jobs.index') }}" class="hover:text-blue-200 font-medium transition">My Jobs</a>
+                <a href="{{ route('client.jobs.create') }}" class="bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded-md font-bold transition">+ Post a Job</a>
                 <span class="font-medium">👋 Hello, {{ Auth::user()->name }}</span>
                 <form method="POST" action="{{ route('logout') }}" class="m-0">
                     @csrf
@@ -28,8 +29,9 @@
     <div id="mobile-menu-client" class="hidden md:hidden bg-blue-700 px-4 pt-2 pb-4 space-y-2 shadow-inner">
         <span class="block text-blue-200 font-medium pb-2 border-b border-blue-500">👋 Hello, {{ Auth::user()->name }}</span>
         <a href="{{ route('client.dashboard') }}" class="block text-white hover:bg-blue-500 px-3 py-2 rounded-md font-medium">Dashboard</a>
-        <a href="#" class="block text-white hover:bg-blue-500 px-3 py-2 rounded-md font-medium">My Jobs</a>
-        <a href="#" class="block bg-blue-500 hover:bg-blue-800 text-white px-3 py-2 rounded-md font-bold">+ Post a Job</a>
+
+        <a href="{{ route('client.jobs.index') }}" class="block text-white hover:bg-blue-500 px-3 py-2 rounded-md font-medium">My Jobs</a>
+        <a href="{{ route('client.jobs.create') }}" class="block bg-blue-500 hover:bg-blue-800 text-white px-3 py-2 rounded-md font-bold">+ Post a Job</a>
         <form method="POST" action="{{ route('logout') }}" class="mt-2">
             @csrf
             <button type="submit" class="w-full text-left bg-red-500 hover:bg-red-600 px-3 py-2 rounded-md text-white font-bold">Logout</button>
