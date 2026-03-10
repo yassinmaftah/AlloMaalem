@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -32,7 +32,7 @@ class ProfileController extends Controller
             $validated = $request->validate([
                 'phone'  => 'required|string|max:20',
                 'city'   => 'required|string|max:50',
-                'avatar' => 'nullable|image|mimes:png,jpg|max:2048', // 2048 =  2MB
+                'avatar' => 'nullable|image|mimes:png,jpg|max:2048',
             ],
             [
                 'phone.required' => 'Please enter your phone number so maalem can contact you.',
