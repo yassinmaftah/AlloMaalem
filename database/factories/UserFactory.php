@@ -29,15 +29,15 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
             'phone' => fake()->phoneNumber(),
-            'city' => fake()->randomElement($moroccanCities),
             'role' => fake()->randomElement($roles),
             'avatar' => 'https://i.pravatar.cc/150?u=' . fake()->unique()->numberBetween(1, 100),
             'bio' => fake()->paragraph(),
             'speciality' => fake()->jobTitle(),
             'is_verified' => fake()->boolean(20),
-            'remember_token' => Str::random(10),
+            'is_baned' => false,
+            'city_id' => null,
         ];
     }
 

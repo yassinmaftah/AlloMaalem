@@ -17,13 +17,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone')->nullable();
-            $table->string('city')->nullable();
             $table->enum('role', ['client', 'maalem', 'admin']);
             $table->string('avatar')->nullable();
             $table->text('bio')->nullable();
             $table->string('speciality')->nullable();
             $table->boolean('is_verified')->default(false);
-            $table->rememberToken();
+            $table->boolean('is_baned')->default(false);
             $table->timestamps();
         });
     }

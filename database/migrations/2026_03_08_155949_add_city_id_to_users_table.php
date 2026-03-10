@@ -12,8 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            // We use constrained() to link it to the cities table
-            $table->foreignId('city_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('city_id')->nullable()->constrained()->onDelete('set null');
         });
     }
 

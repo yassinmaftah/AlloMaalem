@@ -24,7 +24,7 @@
                 <p class="text-gray-500">It takes less than a minute</p>
             </div>
 
-            <form action="{{ route('register') }}" method="POST" class="space-y-4">
+            <form action="{{ route('register') }}" method="POST" class="space-y-4" enctype="multipart/form-data">
                 @csrf
 
                 <div class="grid grid-cols-2 gap-4 mb-2">
@@ -63,8 +63,15 @@
                 </div>
 
                 <div>
-                    <label class="block text-gray-700 font-medium mb-1">Confirm Password</label>
-                    <input type="password" name="password_confirmation" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600" placeholder="••••••••">
+                    <label class="block text-gray-700 font-medium mb-1">Phone Number</label>
+                    <input type="tel" name="phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600" placeholder="+212 6XX XXX XXX" value="{{ old('phone') }}">
+                    @error('phone') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Profile Picture <span class="text-gray-500 text-sm">(Optional)</span></label>
+                    <input type="file" name="avatar" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600" accept="image/*">
+                    @error('avatar') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
 
                 <button type="submit" class="w-full bg-blue-900 text-white py-3 rounded-lg font-bold hover:bg-blue-800 transition">

@@ -22,13 +22,13 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
-        'city',
         'role',
         'avatar',
         'bio',
         'speciality',
-        'info_done',
         'is_verified',
+        'is_baned',
+        'city_id',
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -56,4 +56,5 @@ class User extends Authenticatable
     public function applications(){return $this->hasMany(Application::class);}
     public function reviewsWritten(){return $this->hasMany(Review::class, 'reviewer_id');}
     public function reviewsReceived(){return $this->hasMany(Review::class, 'reviewed_id');}
+    public function city(){return $this->belongsTo(City::class);}
 }

@@ -12,8 +12,7 @@ class Job extends Model
     protected $fillable = [
         'title',
         'description',
-        'budget',
-        'city',
+        'city_id',
         'status',
         'is_urgent',
         'user_id',
@@ -22,6 +21,7 @@ class Job extends Model
 
     public function user(){return $this->belongsTo(User::class);}
     public function category(){return $this->belongsTo(Category::class);}
+    public function city(){return $this->belongsTo(City::class);}
     public function applications(){return $this->hasMany(Application::class);}
     public function review(){return $this->hasOne(Review::class);}
 }

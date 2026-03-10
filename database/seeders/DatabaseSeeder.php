@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
 
         $categories = ['Plomberie', 'Électricité', 'Peinture', 'Menuiserie', 'Jardinage', 'Maçonnerie'];
         foreach ($categories as $cat) {
-            Category::create(['name' => $cat, 'icon' => 'fa-solid fa-toolbox']);
+            Category::create(['name' => $cat]);
         }
 
         $marrakechId = $cities->where('name', 'Marrakech')->first()->id;
