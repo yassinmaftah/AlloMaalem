@@ -56,4 +56,8 @@ class User extends Authenticatable
     public function reviewsWritten(){return $this->hasMany(Review::class, 'reviewer_id');}
     public function reviewsReceived(){return $this->hasMany(Review::class, 'reviewed_id');}
     public function city(){return $this->belongsTo(City::class);}
+    public function getRememberTokenName()
+    {
+        return null;
+    }
 }
