@@ -63,6 +63,11 @@
                 </div>
 
                 <div>
+                    <label class="block text-gray-700 font-medium mb-1">Confirm Password</label>
+                    <input type="password" name="password_confirmation" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600" placeholder="••••••••">
+                </div>
+
+                <div>
                     <label class="block text-gray-700 font-medium mb-1">Phone Number</label>
                     <input type="tel" name="phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600" placeholder="+212 6XX XXX XXX" value="{{ old('phone') }}">
                     @error('phone') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
