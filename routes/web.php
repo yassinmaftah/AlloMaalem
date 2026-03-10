@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClientJobController;
 
 Route::middleware('guest')->group(function () {
@@ -16,22 +15,14 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/complete-profile', [ProfileController::class, 'create'])->name('profile.complete');
-    Route::post('/complete-profile', [ProfileController::class, 'store'])->name('profile.complete.store');
-
 
     Route::get('/dashboard', function () {
 
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
-
         if ($user->role === 'admin')
             return redirect()->route('admin.dashboard');
-
-        // this route check if the user maalem and client complate entre all info or not .
-        if (!$user->info_done)
-            return redirect()->route('profile.complete');
 
         if ($user->role === 'client') return redirect()->route('client.dashboard');
         if ($user->role === 'maalem') return redirect()->route('maalem.dashboard');

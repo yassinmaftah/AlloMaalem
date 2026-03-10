@@ -17,16 +17,25 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|confirmed',
+            'phone' => 'required|string|max:20',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'role' => 'required|in:client,maalem',
         ]);
-        // dd($Data);
+
+        $avatarPath = null;
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+        }
+
         $user = User::create([
             'name' => $Data['name'],
             'email' => $Data['email'],
             'password' => Hash::make($Data['password']),
+            'phone' => $Data['phone'],
+            'avatar' => $avatarPath,
             'role' => $Data['role'],
         ]);
-        // dd($user->role);
+
         Auth::login($user);
         return redirect()->route('dashboard');
     }

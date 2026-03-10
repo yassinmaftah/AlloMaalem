@@ -7,20 +7,52 @@ use App\Models\Category;
 use App\Models\Job;
 use App\Models\Application;
 use App\Models\Review;
+use App\Models\City;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $categories = ['Plomberie', 'Électricité', 'Peinture', 'Menuiserie', 'Jardinage', 'Maçonnerie'];
-        foreach ($categories as $cat) {
-            Category::create(['name' => $cat, 'icon' => 'fa-solid fa-toolbox']);
+        $moroccanCities = [
+            'Casablanca', 'Rabat', 'Marrakech', 'Fes', 'Tangier',
+            'Agadir', 'Meknes', 'Oujda', 'Kenitra', 'Tetouan',
+            'Safi', 'Mohammedia', 'Khouribga', 'El Jadida', 'Beni Mellal'
+        ];
+
+        foreach ($moroccanCities as $cityName) {
+            City::firstOrCreate(['name' => $cityName]);
         }
 
-        $Admin = User::factory()->create(['name' => 'Yassine Maftah','email' => 'admin@allomaalem.com','role' => 'admin',]);
-        $client = User::factory()->create(['name' => 'Yassine Bahajou', 'email' => 'YassineBahajou@gmail.com', 'role' => 'client']);
-        $maalem = User::factory()->create(['name' => 'Oussama Kara', 'email' => 'OussamaKara@gmail.com', 'role' => 'maalem']);
+        $cities = City::all();
+
+        $categories = ['Plomberie', 'Électricité', 'Peinture', 'Menuiserie', 'Jardinage', 'Maçonnerie'];
+        foreach ($categories as $cat) {
+            Category::create(['name' => $cat]);
+        }
+
+        $marrakechId = $cities->where('name', 'Marrakech')->first()->id;
+
+        $Admin = User::factory()->create([
+            'name' => 'Yassine Maftah',
+            'email' => 'admin@allomaalem.com',
+            'role' => 'admin',
+            'city_id' => $marrakechId
+        ]);
+
+        $client = User::factory()->create([
+            'name' => 'Yassine Bahajou',
+            'email' => 'YassineBahajou@gmail.com',
+            'role' => 'client',
+            'city_id' => $marrakechId
+        ]);
+
+        $maalem = User::factory()->create([
+            'name' => 'Oussama Kara',
+            'email' => 'OussamaKara@gmail.com',
+            'role' => 'maalem',
+            'city_id' => $marrakechId
+        ]);
 
         User::factory(20)->create();
 
@@ -39,9 +71,11 @@ class DatabaseSeeder extends Seeder
 
         foreach($jobs as $job) {
             $applicants = $maalems->random(2);
-            foreach($applicants as $applicant)
-            {
-                Application::factory()->create(['job_id' => $job->id,'user_id' => $applicant->id,]);
+            foreach($applicants as $applicant) {
+                Application::factory()->create([
+                    'job_id' => $job->id,
+                    'user_id' => $applicant->id,
+                ]);
             }
         }
 

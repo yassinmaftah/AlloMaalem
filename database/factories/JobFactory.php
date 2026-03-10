@@ -19,8 +19,7 @@ class JobFactory extends Factory
         return [
             'title' => fake()->sentence(4),
             'description' => fake()->paragraph(3),
-            'budget' => fake()->numberBetween(100, 5000),
-            'city' => fake()->randomElement(['Casablanca', 'Rabat', 'Marrakech']),
+            'city_id' => 1,
             'status' => fake()->randomElement(['open', 'open', 'open', 'in_progress', 'completed']),
             'is_urgent' => fake()->boolean(10),
             'user_id' => 1,
