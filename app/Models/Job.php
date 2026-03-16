@@ -8,15 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Job extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     protected $fillable = [
         'title',
         'description',
-        'city_id',
+        'budget',
         'status',
         'is_urgent',
         'user_id',
         'category_id',
+        'city_id',
     ];
 
     public function user(){return $this->belongsTo(User::class);}

@@ -4,50 +4,21 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
-
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
-        $moroccanCities = ['Casablanca', 'Rabat', 'Marrakech', 'Tanger', 'Agadir', 'Fes'];
-        $roles = ['client', 'maalem'];
-
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            'password' => Hash::make('password123'),
             'phone' => fake()->phoneNumber(),
-            'role' => fake()->randomElement($roles),
-            'avatar' => 'https://i.pravatar.cc/150?u=' . fake()->unique()->numberBetween(1, 100),
+            'role' => fake()->randomElement(['client', 'maalem']),
+            'avatar' => null,
             'bio' => fake()->paragraph(),
-            'speciality' => fake()->jobTitle(),
-            'is_verified' => fake()->boolean(20),
+            'is_verified' => false,
             'is_baned' => false,
-            'city_id' => null,
         ];
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
     }
 }

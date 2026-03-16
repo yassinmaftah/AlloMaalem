@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('job_id')->constrained()->onDelete('cascade');
             $table->foreignId('reviewer_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('reviewed_id')->constrained('users')->onDelete('cascade');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

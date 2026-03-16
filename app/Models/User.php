@@ -25,10 +25,8 @@ class User extends Authenticatable
         'role',
         'avatar',
         'bio',
-        'speciality',
         'is_verified',
         'is_baned',
-        'city_id',
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -45,6 +43,7 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    public $timestamps = false;
     protected function casts(): array
     {
         return [

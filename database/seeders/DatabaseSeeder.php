@@ -9,88 +9,137 @@ use App\Models\Application;
 use App\Models\Review;
 use App\Models\City;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $moroccanCities = [
-            'Casablanca', 'Rabat', 'Marrakech', 'Fes', 'Tangier',
-            'Agadir', 'Meknes', 'Oujda', 'Kenitra', 'Tetouan',
-            'Safi', 'Mohammedia', 'Khouribga', 'El Jadida', 'Beni Mellal'
+        // Create cities
+        $cities = [
+            'Casablanca',
+            'Rabat',
+            'Marrakech',
+            'Fes',
+            'Tangier',
+            'Agadir',
         ];
 
-        foreach ($moroccanCities as $cityName) {
-            City::firstOrCreate(['name' => $cityName]);
+        foreach ($cities as $city) {
+            City::create(['name' => $city]);
         }
 
-        $cities = City::all();
+        // Create categories
+        $categories = [
+            'Plomberie',
+            'Électricité',
+            'Peinture',
+            'Menuiserie',
+            'Jardinage',
+            'Maçonnerie',
+        ];
 
-        $categories = ['Plomberie', 'Électricité', 'Peinture', 'Menuiserie', 'Jardinage', 'Maçonnerie'];
         foreach ($categories as $cat) {
             Category::create(['name' => $cat]);
         }
 
-        $marrakechId = $cities->where('name', 'Marrakech')->first()->id;
-
-        $Admin = User::factory()->create([
-            'name' => 'Yassine Maftah',
+        // Create admin user
+        User::create([
+            'name' => 'Admin User',
             'email' => 'admin@allomaalem.com',
+            'password' => Hash::make('password123'),
+            'phone' => '0612345678',
             'role' => 'admin',
-            'city_id' => $marrakechId
+            'is_verified' => true,
         ]);
 
-        $client = User::factory()->create([
-            'name' => 'Yassine Bahajou',
-            'email' => 'YassineBahajou@gmail.com',
+        // Create client users
+        $client1 = User::create([
+            'name' => 'Ahmed Benali',
+            'email' => 'ahmed@example.com',
+            'password' => Hash::make('password123'),
+            'phone' => '0612345679',
             'role' => 'client',
-            'city_id' => $marrakechId
+            'is_verified' => true,
         ]);
 
-        $maalem = User::factory()->create([
-            'name' => 'Oussama Kara',
-            'email' => 'OussamaKara@gmail.com',
+        $client2 = User::create([
+            'name' => 'Fatima Zahra',
+            'email' => 'fatima@example.com',
+            'password' => Hash::make('password123'),
+            'phone' => '0612345680',
+            'role' => 'client',
+            'is_verified' => true,
+        ]);
+
+        // Create maalem users
+        $maalem1 = User::create([
+            'name' => 'Mohammed Karim',
+            'email' => 'mohammed@example.com',
+            'password' => Hash::make('password123'),
+            'phone' => '0612345681',
             'role' => 'maalem',
-            'city_id' => $marrakechId
+            'bio' => 'Plombier expérimenté avec 10 ans d\'expérience',
+            'is_verified' => true,
         ]);
 
-        User::factory(20)->create();
+        $maalem2 = User::create([
+            'name' => 'Hassan Alaoui',
+            'email' => 'hassan@example.com',
+            'password' => Hash::make('password123'),
+            'phone' => '0612345682',
+            'role' => 'maalem',
+            'bio' => 'Électricien professionnel',
+            'is_verified' => true,
+        ]);
 
-        $clients = User::where('role', 'client')->get();
-        $cats = Category::all();
+        // Create jobs
+        $job1 = Job::create([
+            'title' => 'Réparation fuite d\'eau',
+            'description' => 'Fuite d\'eau dans la cuisine',
+            'budget' => 500,
+            'status' => 'open',
+            'is_urgent' => true,
+            'user_id' => $client1->id,
+            'category_id' => 1,
+            'city_id' => 1,
+        ]);
 
-        foreach($clients as $c) {
-            Job::factory(3)->create([
-                'user_id' => $c->id,
-                'category_id' => $cats->random()->id,
-            ]);
-        }
+        $job2 = Job::create([
+            'title' => 'Installation électrique',
+            'description' => 'Installation de nouveaux circuits électriques',
+            'budget' => 1500,
+            'status' => 'open',
+            'is_urgent' => false,
+            'user_id' => $client2->id,
+            'category_id' => 2,
+            'city_id' => 2,
+        ]);
 
-        $jobs = Job::where('status', 'open')->get();
-        $maalems = User::where('role', 'maalem')->get();
+        // Create applications
+        Application::create([
+            'proposed_price' => 450,
+            'message' => 'Je peux faire ce travail rapidement',
+            'status' => 'pending',
+            'job_id' => $job1->id,
+            'user_id' => $maalem1->id,
+        ]);
 
-        foreach($jobs as $job) {
-            $applicants = $maalems->random(2);
-            foreach($applicants as $applicant) {
-                Application::factory()->create([
-                    'job_id' => $job->id,
-                    'user_id' => $applicant->id,
-                ]);
-            }
-        }
+        Application::create([
+            'proposed_price' => 1400,
+            'message' => 'Travail de qualité garanti',
+            'status' => 'accepted',
+            'job_id' => $job2->id,
+            'user_id' => $maalem2->id,
+        ]);
 
-        $completedJobs = Job::where('status', 'completed')->get();
-
-        foreach($completedJobs as $job) {
-            $randomMaalem = $maalems->random();
-
-            Review::factory()->create([
-                'job_id' => $job->id,
-                'reviewer_id' => $job->user_id,
-                'reviewed_id' => $randomMaalem->id,
-                'rating' => fake()->numberBetween(3, 5),
-                'comment' => fake()->sentence(),
-            ]);
-        }
+        // Create reviews
+        Review::create([
+            'rating' => 5,
+            'comment' => 'Excellent travail, très professionnel',
+            'job_id' => $job2->id,
+            'reviewer_id' => $client2->id,
+            'reviewed_id' => $maalem2->id,
+        ]);
     }
 }

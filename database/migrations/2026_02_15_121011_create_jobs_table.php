@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->foreignId('city_id')->constrained()->onDelete('cascade');
+            $table->decimal('budget', 10, 2);
             $table->enum('status', ['open', 'in_progress', 'completed'])->default('open');
             $table->boolean('is_urgent')->default(false);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
+            $table->foreignId('city_id')->constrained()->onDelete('cascade');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 
