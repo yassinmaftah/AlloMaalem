@@ -3,61 +3,32 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientJobController;
+use App\Http\Controllers\DashboardController;
 
-Route::middleware('guest')->group(function () {
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+Route::view('/', 'welcome');
+
+Route::middleware('guest')->controller(AuthController::class)->group(function () {
+    Route::get('/register', 'showRegister')->name('register');
+    Route::post('/register', 'register');
+    Route::get('/login', 'showLogin')->name('login');
+    Route::post('/login', 'login');
 });
-
 
 Route::middleware('auth')->group(function () {
-
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/dashboard', function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
-
-        if ($user->role === 'admin')
-            return redirect()->route('admin.dashboard');
-
-        if ($user->role === 'client') return redirect()->route('client.dashboard');
-        if ($user->role === 'maalem') return redirect()->route('maalem.dashboard');
-
-        return abort(403);
-
-    })->name('dashboard');
-});
-
-Route::middleware(['auth', 'role:client'])->group(function () {
-
-    Route::get('/client/dashboard', function () {
-        return view('client.dashboard');
-    })->name('client.dashboard');
-
-    Route::prefix('client/jobs')->name('client.jobs.')->group(function () {
-        Route::get('/', [ClientJobController::class, 'index'])->name('index');
-        Route::get('/create', [ClientJobController::class, 'create'])->name('create');
-        Route::get('/{id}', [ClientJobController::class, 'show'])->name('show');
+    Route::middleware('role:client')->prefix('client')->name('client.')->group(function () {
+        Route::view('/dashboard', 'client.dashboard')->name('dashboard');
+        Route::resource('jobs', ClientJobController::class)->only(['index', 'create', 'show', 'store']);
     });
 
-});
+    Route::middleware('role:maalem')->prefix('maalem')->name('maalem.')->group(function () {
+        Route::view('/dashboard', 'maalem.dashboard')->name('dashboard');
+    });
 
-Route::middleware(['auth', 'role:maalem'])->group(function () {
-    Route::get('/maalem/dashboard', function () {
-        return view('maalem.dashboard');
-    })->name('maalem.dashboard');
-});
-
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
-});
-
-Route::get('/', function () {
-    return view('welcome');
+    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
+    });
 });
