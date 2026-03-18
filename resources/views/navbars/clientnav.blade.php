@@ -9,7 +9,11 @@
 
                 <a href="{{ route('client.jobs.index') }}" class="hover:text-blue-200 font-medium transition">My Jobs</a>
                 <a href="{{ route('client.jobs.create') }}" class="bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded-md font-bold transition">+ Post a Job</a>
-                <span class="font-medium">👋 Hello, {{ Auth::user()->name }}</span>
+                <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 hover:opacity-80 transition">
+                    <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=1d4ed8&color=fff' }}"
+                         class="w-8 h-8 rounded-full object-cover border-2 border-white" alt="avatar">
+                    <span class="font-medium">{{ Auth::user()->name }}</span>
+                </a>
                 <form method="POST" action="{{ route('logout') }}" class="m-0">
                     @csrf
                     <button type="submit" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-sm font-bold transition">Logout</button>
@@ -27,7 +31,12 @@
     </div>
 
     <div id="mobile-menu-client" class="hidden md:hidden bg-blue-700 px-4 pt-2 pb-4 space-y-2 shadow-inner">
-        <span class="block text-blue-200 font-medium pb-2 border-b border-blue-500">👋 Hello, {{ Auth::user()->name }}</span>
+        <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 pb-2 border-b border-blue-500">
+            <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=1d4ed8&color=fff' }}"
+                 class="w-8 h-8 rounded-full object-cover border-2 border-white" alt="avatar">
+            <span class="text-blue-200 font-medium">{{ Auth::user()->name }}</span>
+        </a>
+        <a href="{{ route('profile.edit') }}" class="block text-white hover:bg-blue-500 px-3 py-2 rounded-md font-medium">Profile</a>
         <a href="{{ route('client.dashboard') }}" class="block text-white hover:bg-blue-500 px-3 py-2 rounded-md font-medium">Dashboard</a>
 
         <a href="{{ route('client.jobs.index') }}" class="block text-white hover:bg-blue-500 px-3 py-2 rounded-md font-medium">My Jobs</a>
