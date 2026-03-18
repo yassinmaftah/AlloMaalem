@@ -19,72 +19,51 @@
             </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-2">
-                        <h2 class="text-xl font-bold text-gray-900">Fix my Kitchen Pipe</h2>
-                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Open</span>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                        Water is leaking under the sink. I need a plumber to come fix it as soon as possible.
-                    </p>
-                    <div class="flex items-center text-sm text-gray-500 mb-4">
-                        <span class="mr-4">📍 Casablanca</span>
-                        <span>🧰 Plumber</span>
-                    </div>
-                </div>
-                <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
-                    <a href="{{ route('client.jobs.show', 1) }}" class="block w-full text-center bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-2 px-4 rounded transition border border-blue-200 hover:border-blue-600">
-                        See Applications (3)
-                    </a>
-                </div>
+        @if ($jobs->isEmpty())
+            <div class="text-center text-gray-500 py-20">
+                <p class="text-xl mb-4">You haven't posted any jobs yet.</p>
+                <a href="{{ route('client.jobs.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition">Post your first Job</a>
             </div>
-
-            <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-2">
-                        <h2 class="text-xl font-bold text-gray-900">Paint the Bedroom</h2>
-                        <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded">In Progress</span>
+        @else
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach ($jobs as $job)
+                    @php
+                        $statusColors = [
+                            'open'        => 'bg-green-100 text-green-800',
+                            'in_progress' => 'bg-yellow-100 text-yellow-800',
+                            'completed'   => 'bg-gray-100 text-gray-800',
+                        ];
+                        $statusColor = $statusColors[$job->status] ?? 'bg-gray-100 text-gray-800';
+                    @endphp
+                    <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden {{ $job->status === 'completed' ? 'opacity-75' : '' }}">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h2 class="text-xl font-bold text-gray-900">{{ $job->title }}</h2>
+                                <div class="flex flex-col items-end gap-1">
+                                    <span class="{{ $statusColor }} text-xs font-semibold px-2.5 py-0.5 rounded capitalize">
+                                        {{ str_replace('_', ' ', $job->status) }}
+                                    </span>
+                                    @if ($job->is_urgent)
+                                        <span class="bg-red-100 text-red-700 text-xs font-semibold px-2.5 py-0.5 rounded">🔥 Urgent</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ $job->description }}</p>
+                            <div class="flex items-center text-sm text-gray-500 mb-2">
+                                <span class="mr-4">📍 {{ $job->city->name }}</span>
+                                <span>🧰 {{ $job->category->name }}</span>
+                            </div>
+                            <div class="text-sm text-gray-500">💰 {{ number_format($job->budget, 2) }} MAD</div>
+                        </div>
+                        <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                            <a href="{{ route('client.jobs.show', $job->id) }}" class="block w-full text-center bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-2 px-4 rounded transition border border-blue-200 hover:border-blue-600">
+                                View Details
+                            </a>
+                        </div>
                     </div>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                        Need an experienced painter to paint a 4x4m bedroom in white. I already bought the paint.
-                    </p>
-                    <div class="flex items-center text-sm text-gray-500 mb-4">
-                        <span class="mr-4">📍 Rabat</span>
-                        <span>🎨 Painter</span>
-                    </div>
-                </div>
-                <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
-                    <a href="{{ route('client.jobs.show', 2) }}" class="block w-full text-center bg-gray-200 text-gray-700 hover:bg-gray-300 font-semibold py-2 px-4 rounded transition">
-                        View Details
-                    </a>
-                </div>
+                @endforeach
             </div>
-
-            <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden opacity-75">
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-2">
-                        <h2 class="text-xl font-bold text-gray-900">Install Ceiling Fan</h2>
-                        <span class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded">Completed</span>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                        Need an electrician to install a new ceiling fan in the living room.
-                    </p>
-                    <div class="flex items-center text-sm text-gray-500 mb-4">
-                        <span class="mr-4">📍 Marrakech</span>
-                        <span>⚡ Electrician</span>
-                    </div>
-                </div>
-                <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
-                    <a href="{{ route('client.jobs.show', 3) }}" class="block w-full text-center bg-gray-200 text-gray-700 hover:bg-gray-300 font-semibold py-2 px-4 rounded transition">
-                        View Details
-                    </a>
-                </div>
-            </div>
-
-        </div>
+        @endif
     </main>
 
 </body>
