@@ -52,7 +52,7 @@
                         <span class="ml-2 text-sm text-gray-600">Remember me</span>
                     </label>
 
-                    <a href="#" class="text-sm text-blue-600 hover:text-blue-900">Forgot Password?</a>
+                    <a href="{{ route('password.email.form') }}" class="text-sm text-blue-600 hover:text-blue-900">Forgot Password?</a>
                 </div>
 
                 <button type="submit" class="w-full bg-blue-900 text-white py-3 rounded-lg font-bold hover:bg-blue-800 transition">
