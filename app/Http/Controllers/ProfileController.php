@@ -33,7 +33,7 @@ class ProfileController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('profile.edit')->with('success', 'Votre profil a été mis à jour avec succès !');
+        return redirect()->route('profile.edit')->with('success', 'the profile is updated successfully');
     }
 
     public function updatePassword(Request $request)
@@ -47,6 +47,6 @@ class ProfileController extends Controller
             'password' => Hash::make($validated['password'])
         ]);
 
-        return redirect()->route('profile.edit')->with('success', 'Mot de passe modifié !');
+        return redirect()->route('profile.edit')->with('success', 'The password is modified successfully');
     }
 }
