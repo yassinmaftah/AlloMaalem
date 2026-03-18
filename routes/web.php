@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientJobController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ProfileController;
 
 Route::view('/', 'welcome');
@@ -13,6 +14,16 @@ Route::middleware('guest')->controller(AuthController::class)->group(function ()
     Route::post('/register', 'register');
     Route::get('/login', 'showLogin')->name('login');
     Route::post('/login', 'login');
+});
+
+// forgot password routes (guest)
+Route::middleware('guest')->group(function () {
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'showEmailForm'])->name('password.email.form');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendCode'])->name('password.send.code');
+    Route::get('/verify-code', [ForgotPasswordController::class, 'showCodeForm'])->name('password.code.form');
+    Route::post('/verify-code', [ForgotPasswordController::class, 'verifyCode'])->name('password.verify.code');
+    Route::get('/reset-password', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset.form');
+    Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.reset');
 });
 
 Route::middleware('auth')->group(function () {
