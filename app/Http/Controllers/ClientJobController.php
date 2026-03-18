@@ -30,7 +30,6 @@ class ClientJobController extends Controller
             'budget'      => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
             'city_id'     => 'required|exists:cities,id',
-            'is_urgent'   => 'boolean',
         ]);
 
         Job::create([
