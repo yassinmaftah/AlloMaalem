@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientJobController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 
 Route::view('/', 'welcome');
 
@@ -18,6 +19,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // profiles routes
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 
     Route::middleware('role:client')->prefix('client')->name('client.')->group(function () {
         Route::view('/dashboard', 'client.dashboard')->name('dashboard');
