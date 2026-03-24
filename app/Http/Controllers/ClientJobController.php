@@ -46,6 +46,61 @@ class ClientJobController extends Controller
         return redirect()->route('client.jobs.index')->with('success', 'Job posted successfully!');
     }
 
+    public function edit($id)
+    {
+        $job = Job::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+
+        if ($job->status !== 'open') {
+            return redirect()->route('client.jobs.show', $job->id)->with('error', 'You can only edit open jobs.');
+        }
+
+        $categories = Category::all();
+        $cities = City::all();
+        return view('client.jobs.edit', compact('job', 'categories', 'cities'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $job = Job::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+
+        if ($job->status !== 'open') {
+            return redirect()->route('client.jobs.show', $job->id)->with('error', 'You can only edit open jobs.');
+        }
+
+        $request->validate([
+            'title'       => 'required|string|max:255',
+            'description' => 'required|string',
+            'budget'      => 'required|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
+            'city_id'     => 'required|exists:cities,id',
+        ]);
+
+        $job->update([
+            'title'       => $request->title,
+            'description' => $request->description,
+            'budget'      => $request->budget,
+            'category_id' => $request->category_id,
+            'city_id'     => $request->city_id,
+            'is_urgent'   => $request->has('is_urgent'),
+        ]);
+
+        return redirect()->route('client.jobs.show', $job->id)->with('success', 'Job updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $job = Job::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+
+        if ($job->status !== 'open') {
+            return redirect()->route('client.jobs.show', $job->id)->with('error', 'You can only delete open jobs.');
+        }
+
+        $job->applications()->where('status', 'pending')->delete();
+        $job->delete();
+
+        return redirect()->route('client.jobs.index')->with('success', 'Job deleted successfully!');
+    }
+
     public function show($id)
     {
         $job = Job::where('id', $id)
