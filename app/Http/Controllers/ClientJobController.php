@@ -50,9 +50,8 @@ class ClientJobController extends Controller
     {
         $job = Job::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
 
-        if ($job->status !== 'open') {
+        if ($job->status !== 'open')
             return redirect()->route('client.jobs.show', $job->id)->with('error', 'You can only edit open jobs.');
-        }
 
         $categories = Category::all();
         $cities = City::all();
@@ -63,9 +62,8 @@ class ClientJobController extends Controller
     {
         $job = Job::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
 
-        if ($job->status !== 'open') {
+        if ($job->status !== 'open')
             return redirect()->route('client.jobs.show', $job->id)->with('error', 'You can only edit open jobs.');
-        }
 
         $request->validate([
             'title'       => 'required|string|max:255',
