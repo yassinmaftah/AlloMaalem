@@ -35,7 +35,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -44,6 +43,7 @@ class User extends Authenticatable
      * @return array<string, string>
      */
     public $timestamps = false;
+    public $rememberTokenName = null;
     protected function casts(): array
     {
         return [
