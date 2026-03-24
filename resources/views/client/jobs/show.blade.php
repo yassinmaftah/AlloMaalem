@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Details - Allo Maalem</title>
+    <title>{{ $job->title }} - Allo Maalem</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -21,21 +21,34 @@
         <div class="bg-white shadow-md rounded-lg p-6 mb-8 border-l-4 border-blue-600">
             <div class="flex justify-between items-start">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Fix my Kitchen Pipe</h1>
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ $job->title }}</h1>
                     <div class="flex items-center text-sm text-gray-500 mb-4 space-x-4">
-                        <span>📍 Casablanca</span>
-                        <span>🧰 Plumber</span>
-                        <span>📅 Posted 2 days ago</span>
+                        <span>📍 {{ $job->city->name }}</span>
+                        <span>🧰 {{ $job->category->name }}</span>
+                        <span>📅 {{ $job->created_at->diffForHumans() }}</span>
                     </div>
                 </div>
-                <span class="bg-green-100 text-green-800 text-sm font-semibold px-3 py-1 rounded-full">Open</span>
+                <div class="flex flex-col items-end gap-2">
+                    @php
+                        $statusColors = [
+                            'open'        => 'bg-green-100 text-green-800',
+                            'in_progress' => 'bg-yellow-100 text-yellow-800',
+                            'completed'   => 'bg-gray-100 text-gray-800',
+                        ];
+                    @endphp
+                    <span class="{{ $statusColors[$job->status] }} text-sm font-semibold px-3 py-1 rounded-full capitalize">
+                        {{ str_replace('_', ' ', $job->status) }}
+                    </span>
+                    @if ($job->is_urgent)
+                        <span class="bg-red-100 text-red-700 text-sm font-semibold px-3 py-1 rounded-full">🔥 Urgent</span>
+                    @endif
+                </div>
             </div>
             <div class="border-t border-gray-200 pt-4 mt-2">
                 <h3 class="text-lg font-bold text-gray-800 mb-2">Description:</h3>
-                <p class="text-gray-700 leading-relaxed">
-                    Water is leaking under the sink. I need a plumber to come fix it as soon as possible. The pipe is made of PVC. I am available everyday after 4:00 PM.
-                </p>
+                <p class="text-gray-700 leading-relaxed">{{ $job->description }}</p>
             </div>
+            <div class="mt-4 text-gray-700 font-semibold">💰 Budget: {{ number_format($job->budget, 2) }} MAD</div>
         </div>
 
         <div>
