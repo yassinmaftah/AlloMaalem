@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:client')->prefix('client')->name('client.')->group(function () {
         Route::view('/dashboard', 'client.dashboard')->name('dashboard');
-        Route::resource('jobs', ClientJobController::class)->only(['index', 'create', 'show', 'store']);
+        Route::resource('jobs', ClientJobController::class)->only(['index', 'create', 'show', 'store', 'edit', 'update', 'destroy']);
     });
 
     Route::middleware('role:maalem')->prefix('maalem')->name('maalem.')->group(function () {
