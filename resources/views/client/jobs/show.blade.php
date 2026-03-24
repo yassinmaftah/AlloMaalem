@@ -19,10 +19,10 @@
             @if ($job->status === 'open')
                 <div class="flex gap-2">
                     <a href="{{ route('client.jobs.edit', $job->id) }}" class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg transition">Edit</a>
-                    <form method="POST" action="{{ route('client.jobs.destroy', $job->id) }}" onsubmit="return confirm('Are you sure you want to delete this job?')">
+                    <form method="POST" action="{{ route('client.jobs.destroy', $job->id) }}" id="delete-form">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition">Delete</button>
+                        <button type="button" onclick="confirmDelete()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition">Delete</button>
                     </form>
                 </div>
             @endif
@@ -143,6 +143,27 @@
         </div>
 
     </main>
+
+    <div id="delete-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-xl p-8 max-w-sm w-full">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Delete this job?</h2>
+            <p class="text-gray-600 mb-6">This action cannot be undone. All pending applications will also be deleted.</p>
+            <div class="flex gap-3 justify-end">
+                <button onclick="closeModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-5 rounded-lg transition">Cancel</button>
+                <button onclick="document.getElementById('delete-form').submit()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-5 rounded-lg transition">Yes, Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmDelete() {
+            document.getElementById('delete-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('delete-modal').classList.add('hidden');
+        }
+    </script>
 
 </body>
 </html>
