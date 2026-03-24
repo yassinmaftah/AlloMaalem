@@ -48,6 +48,8 @@ class ClientJobController extends Controller
 
     public function show($id)
     {
-        return view('client.jobs.show');
+        $job = Job::where('id', $id)
+                    ->where('user_id', auth()->id())->firstOrFail();
+        return view('client.jobs.show', compact('job'));
     }
 }
