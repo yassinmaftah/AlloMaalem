@@ -12,11 +12,28 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-        <div class="mb-6">
+        <div class="mb-6 flex justify-between items-center">
             <a href="{{ route('client.jobs.index') }}" class="text-blue-600 hover:text-blue-800 font-medium">
                 &larr; Back to My Jobs
             </a>
+            @if ($job->status === 'open')
+                <div class="flex gap-2">
+                    <a href="{{ route('client.jobs.edit', $job->id) }}" class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg transition">Edit</a>
+                    <form method="POST" action="{{ route('client.jobs.destroy', $job->id) }}" onsubmit="return confirm('Are you sure you want to delete this job?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition">Delete</button>
+                    </form>
+                </div>
+            @endif
         </div>
+
+        @if (session('success'))
+            <div class="bg-green-100 text-green-700 p-4 rounded mb-6">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+            <div class="bg-red-100 text-red-700 p-4 rounded mb-6">{{ session('error') }}</div>
+        @endif
 
         <div class="bg-white shadow-md rounded-lg p-6 mb-8 border-l-4 border-blue-600">
             <div class="flex justify-between items-start">
