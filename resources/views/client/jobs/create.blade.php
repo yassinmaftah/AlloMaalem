@@ -24,7 +24,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('client.jobs.store') }}">
+            <form method="POST" action="{{ route('client.jobs.store') }}" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-4">
@@ -75,6 +75,12 @@
                 <div class="mb-6 flex items-center gap-2">
                     <input type="checkbox" name="is_urgent" id="is_urgent" {{ old('is_urgent') ? 'checked' : '' }}>
                     <label for="is_urgent" class="text-gray-700 font-medium">Mark as Urgent</label>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-1">Image <span class="text-gray-400 font-normal">(optional)</span></label>
+                    <input type="file" name="image" accept="image/*"
+                        class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
                 </div>
 
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition">
