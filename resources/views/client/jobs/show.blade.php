@@ -75,77 +75,49 @@
         </div>
 
         <div>
-            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">Applications (2)</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Applications ({{ $job->applications->count() }})</h2>
 
-                <div class="mt-4 md:mt-0 flex space-x-2">
-                    <select class="border border-gray-300 rounded px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500 bg-white">
-                        <option value="">Sort by Price</option>
-                        <option value="low">Lowest Price First</option>
-                        <option value="high">Highest Price First</option>
-                    </select>
-                    <select class="border border-gray-300 rounded px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500 bg-white">
-                        <option value="">Sort by Rating</option>
-                        <option value="top">Top Rated First</option>
-                    </select>
+            @if ($job->applications->isEmpty())
+                <div class="bg-white rounded-lg shadow p-6 text-center text-gray-500">
+                    No applications yet. Check back later!
                 </div>
-            </div>
+            @else
+                <div class="space-y-4">
+                    @foreach ($job->applications as $app)
+                        @php
+                            $maalem = $app->user;
+                            $avg = $maalem->reviewsReceived->avg('rating');
+                            $stars = round($avg);
+                        @endphp
+                        <div class="bg-white rounded-lg shadow p-6 border border-gray-100">
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
 
-            <div class="space-y-4">
+                                <div class="flex items-center gap-4">
+                                    <img src="{{ $maalem->avatar ? Storage::url($maalem->avatar) : 'https://ui-avatars.com/api/?name='.urlencode($maalem->name).'&background=1d4ed8&color=fff' }}"
+                                        class="w-16 h-16 rounded-full object-cover border-2 border-blue-200">
+                                    <div>
+                                        <h3 class="text-lg font-bold text-gray-900">{{ $maalem->name }}</h3>
+                                        <div class="text-yellow-400 text-sm">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                {{ $i <= $stars ? '⭐' : '☆' }}
+                                            @endfor
+                                            <span class="text-gray-500 ml-1">
+                                                ({{ $maalem->reviewsReceived->count() }} reviews)
+                                            </span>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mt-1">{{ $app->message }}</p>
+                                    </div>
+                                </div>
 
-                <div class="bg-white rounded-lg shadow p-6 flex flex-col md:flex-row justify-between items-center border border-gray-100 hover:shadow-md transition">
-
-                    <div class="flex items-center w-full md:w-auto mb-4 md:mb-0">
-                        <img src="https://ui-avatars.com/api/?name=Hassan+M&color=7F9CF5&background=EBF4FF" alt="Avatar" class="h-16 w-16 rounded-full mr-4">
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-900">Hassan M.</h3>
-                            <p class="text-sm text-gray-500 mb-1">Expert Plumber • Casablanca</p>
-                            <div class="flex items-center text-yellow-500 text-sm">
-                                ⭐⭐⭐⭐⭐ <span class="text-gray-600 ml-1">(4.8 - 12 reviews)</span>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-gray-900 mb-1">{{ number_format($app->proposed_price, 2) }} MAD</div>
+                                    <span class="text-xs text-gray-400">Proposed price</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="w-full md:w-auto flex flex-col items-end">
-                        <div class="text-2xl font-bold text-gray-900 mb-2">150 DH</div>
-                        <div class="flex space-x-2">
-                            <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded transition">
-                                Decline
-                            </button>
-                            <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow transition">
-                                Accept Maalem
-                            </button>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
-
-                <div class="bg-white rounded-lg shadow p-6 flex flex-col md:flex-row justify-between items-center border border-gray-100 hover:shadow-md transition">
-
-                    <div class="flex items-center w-full md:w-auto mb-4 md:mb-0">
-                        <img src="https://ui-avatars.com/api/?name=Karim+B&color=7F9CF5&background=EBF4FF" alt="Avatar" class="h-16 w-16 rounded-full mr-4">
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-900">Karim B.</h3>
-                            <p class="text-sm text-gray-500 mb-1">Plumber • Casablanca</p>
-                            <div class="flex items-center text-yellow-500 text-sm">
-                                ⭐⭐⭐⭐ <span class="text-gray-600 ml-1">(4.2 - 5 reviews)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w-full md:w-auto flex flex-col items-end">
-                        <div class="text-2xl font-bold text-gray-900 mb-2">100 DH</div>
-                        <div class="flex space-x-2">
-                            <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded transition">
-                                Decline
-                            </button>
-                            <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow transition">
-                                Accept Maalem
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            @endif
         </div>
 
     </main>
