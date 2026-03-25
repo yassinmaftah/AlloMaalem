@@ -66,6 +66,12 @@
                 <p class="text-gray-700 leading-relaxed">{{ $job->description }}</p>
             </div>
             <div class="mt-4 text-gray-700 font-semibold">💰 Budget: {{ number_format($job->budget, 2) }} MAD</div>
+
+            @if ($job->image)
+                <div class="mt-4">
+                    <img src="{{ Storage::url($job->image) }}" class="w-full max-h-72 object-cover rounded-lg">
+                </div>
+            @endif
         </div>
 
         <div>

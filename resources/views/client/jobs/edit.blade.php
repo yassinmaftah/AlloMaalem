@@ -24,7 +24,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('client.jobs.update', $job->id) }}">
+            <form method="POST" action="{{ route('client.jobs.update', $job->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
 
@@ -73,6 +73,15 @@
                 <div class="mb-6 flex items-center gap-2">
                     <input type="checkbox" name="is_urgent" id="is_urgent" {{ old('is_urgent', $job->is_urgent) ? 'checked' : '' }}>
                     <label for="is_urgent" class="text-gray-700 font-medium">Mark as Urgent</label>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-1">Image <span class="text-gray-400 font-normal">(optional)</span></label>
+                    @if ($job->image)
+                        <img src="{{ Storage::url($job->image) }}" class="w-32 h-32 object-cover rounded-lg mb-2">
+                    @endif
+                    <input type="file" name="image" accept="image/*"
+                        class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:border-yellow-400">
                 </div>
 
                 <div class="flex gap-3">
