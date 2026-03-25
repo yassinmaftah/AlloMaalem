@@ -20,6 +20,7 @@ class Job extends Model
         'budget',
         'status',
         'is_urgent',
+        'image',
         'user_id',
         'category_id',
         'city_id',
