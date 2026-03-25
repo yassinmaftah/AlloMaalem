@@ -30,7 +30,13 @@ class ClientJobController extends Controller
             'budget'      => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
             'city_id'     => 'required|exists:cities,id',
+            'image'       => 'nullable|image|max:2048',
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('jobs', 'public');
+        }
 
         Job::create([
             'title'       => $request->title,
@@ -39,6 +45,7 @@ class ClientJobController extends Controller
             'category_id' => $request->category_id,
             'city_id'     => $request->city_id,
             'is_urgent'   => $request->has('is_urgent'),
+            'image'       => $imagePath,
             'status'      => 'open',
             'user_id'     => auth()->id(),
         ]);
@@ -71,7 +78,12 @@ class ClientJobController extends Controller
             'budget'      => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
             'city_id'     => 'required|exists:cities,id',
+            'image'       => 'nullable|image|max:2048',
         ]);
+
+        $imagePath = $job->image;
+        if ($request->hasFile('image'))
+            $imagePath = $request->file('image')->store('jobs', 'public');
 
         $job->update([
             'title'       => $request->title,
@@ -80,6 +92,7 @@ class ClientJobController extends Controller
             'category_id' => $request->category_id,
             'city_id'     => $request->city_id,
             'is_urgent'   => $request->has('is_urgent'),
+            'image'       => $imagePath,
         ]);
 
         return redirect()->route('client.jobs.show', $job->id)->with('success', 'Job updated successfully!');
