@@ -112,6 +112,10 @@
                                 <div class="text-right">
                                     <div class="text-2xl font-bold text-gray-900 mb-1">{{ number_format($app->proposed_price, 2) }} MAD</div>
                                     <span class="text-xs text-gray-400">Proposed price</span>
+                                    <div class="flex gap-2 mt-3 justify-end">
+                                        <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded transition">Decline</button>
+                                        <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow transition">Accept</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
