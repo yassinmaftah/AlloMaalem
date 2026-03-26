@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientJobController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\MaalemApplicationController;
 use App\Http\Controllers\MaalemDashboardController;
 use App\Http\Controllers\MaalemJobController;
@@ -50,6 +51,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/jobs/{id}', [MaalemJobController::class, 'show'])->name('jobs.show');
         Route::post('/jobs/{id}/apply', [MaalemJobController::class, 'store'])->name('jobs.apply');
         Route::get('/applications', [MaalemApplicationController::class, 'index'])->name('applications.index');
+        Route::get('/applications/{id}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');
+        Route::put('/applications/{id}', [ApplicationController::class, 'update'])->name('applications.update');
     });
 
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
