@@ -49,10 +49,20 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     @if($application->status === 'pending')
-                                        <a href="{{ route('maalem.applications.edit', $application->id) }}"
-                                           class="text-sm bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-3 py-1 rounded-lg transition">
-                                            Edit
-                                        </a>
+                                        <div class="flex gap-2">
+                                            <a href="{{ route('maalem.applications.edit', $application->id) }}"
+                                               class="text-sm bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-3 py-1 rounded-lg transition">
+                                                Edit
+                                            </a>
+                                            <form method="POST" action="{{ route('maalem.applications.destroy', $application->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                        class="text-sm bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-1 rounded-lg transition">
+                                                    Cancel Offer
+                                                </button>
+                                            </form>
+                                        </div>
                                     @endif
                                 </td>
                             </tr>
