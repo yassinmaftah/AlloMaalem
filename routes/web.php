@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/applications', [MaalemApplicationController::class, 'index'])->name('applications.index');
         Route::get('/applications/{id}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');
         Route::put('/applications/{id}', [ApplicationController::class, 'update'])->name('applications.update');
+        Route::delete('/applications/{id}', [ApplicationController::class, 'destroy'])->name('applications.destroy');
     });
 
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
