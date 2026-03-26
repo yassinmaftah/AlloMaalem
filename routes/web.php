@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/jobs/{id}', [MaalemJobController::class, 'show'])->name('jobs.show');
         Route::post('/jobs/{id}/apply', [MaalemJobController::class, 'store'])->name('jobs.apply');
         Route::get('/applications', [MaalemApplicationController::class, 'index'])->name('applications.index');
+        Route::get('/applications/active', [MaalemApplicationController::class, 'activeMissions'])->name('applications.active');
         Route::get('/applications/{id}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');
         Route::put('/applications/{id}', [ApplicationController::class, 'update'])->name('applications.update');
         Route::delete('/applications/{id}', [ApplicationController::class, 'destroy'])->name('applications.destroy');
