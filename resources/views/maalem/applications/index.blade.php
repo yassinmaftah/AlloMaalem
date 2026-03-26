@@ -54,10 +54,10 @@
                                                class="text-sm bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-3 py-1 rounded-lg transition">
                                                 Edit
                                             </a>
-                                            <form method="POST" action="{{ route('maalem.applications.destroy', $application->id) }}">
+                                            <form method="POST" action="{{ route('maalem.applications.destroy', $application->id) }}" id="cancel-form-{{ $application->id }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
+                                                <button type="button" onclick="openModal({{ $application->id }})"
                                                         class="text-sm bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-1 rounded-lg transition">
                                                     Cancel Offer
                                                 </button>
@@ -76,6 +76,35 @@
             </div>
         @endif
     </main>
+
+    <div id="cancel-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-xl p-8 max-w-sm w-full">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Cancel this offer?</h2>
+            <p class="text-gray-500 mb-6">This action cannot be undone.</p>
+            <div class="flex gap-3 justify-end">
+                <button onclick="closeModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-5 rounded-lg transition">Go Back</button>
+                <button onclick="submitCancel()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-5 rounded-lg transition">Yes, Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let activeFormId = null;
+
+        function openModal(id) {
+            activeFormId = id;
+            document.getElementById('cancel-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            activeFormId = null;
+            document.getElementById('cancel-modal').classList.add('hidden');
+        }
+
+        function submitCancel() {
+            document.getElementById('cancel-form-' + activeFormId).submit();
+        }
+    </script>
 
 </body>
 </html>
