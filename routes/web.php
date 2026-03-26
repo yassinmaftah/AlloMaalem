@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientJobController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\MaalemDashboardController;
 use App\Http\Controllers\ProfileController;
 
 Route::view('/', 'welcome');
@@ -42,7 +43,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:maalem')->prefix('maalem')->name('maalem.')->group(function () {
-        Route::view('/dashboard', 'maalem.dashboard')->name('dashboard');
+        Route::get('/dashboard', [MaalemDashboardController::class, 'index'])->name('dashboard');
     });
 
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
