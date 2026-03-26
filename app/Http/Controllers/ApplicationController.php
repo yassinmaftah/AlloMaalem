@@ -38,4 +38,18 @@ class ApplicationController extends Controller
 
         return redirect()->route('maalem.applications.index')->with('success', 'Application updated successfully!');
     }
+
+    public function destroy($id)
+    {
+        $application = Application::where('id', $id)
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
+
+        if ($application->status !== 'pending')
+            return redirect()->route('maalem.applications.index')->with('error', 'You can only cancel pending applications.');
+
+        $application->delete();
+
+        return redirect()->route('maalem.applications.index')->with('success', 'Application cancelled successfully!');
+    }
 }
