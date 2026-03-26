@@ -11,15 +11,22 @@
     @include('navbars.maalemnav')
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div class="bg-white shadow-lg rounded-lg p-8 border-t-4 border-green-600">
-            <h1 class="text-3xl font-bold text-gray-800 mb-4">
-                Hello Maalem {{ Auth::user()->name }}!
-            </h1>
-            <p class="text-gray-600 text-lg mb-6">
-                Ready to work? Here you will see a list of available jobs from clients in your city.
-            </p>
-            <div class="bg-green-50 text-green-700 p-4 rounded-md border border-green-200">
-                Soon, job posts will appear right here!
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Hello Maalem, {{ Auth::user()->name }}!</h1>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div class="bg-white rounded-lg shadow p-6 border-t-4 border-yellow-400">
+                <p class="text-gray-500 text-sm mb-1">Pending Applications</p>
+                <p class="text-4xl font-bold text-yellow-500">{{ $pendingApplications }}</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 border-t-4 border-green-500">
+                <p class="text-gray-500 text-sm mb-1">Active Jobs</p>
+                <p class="text-4xl font-bold text-green-600">{{ $activeJobs }}</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 border-t-4 border-blue-500">
+                <p class="text-gray-500 text-sm mb-1">Average Rating</p>
+                <p class="text-4xl font-bold text-blue-600">{{ $averageRating ? number_format($averageRating, 1) : 'N/A' }}</p>
             </div>
         </div>
     </main>
