@@ -26,6 +26,7 @@
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date Applied</th>
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">My Proposed Price</th>
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3"></th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
@@ -45,6 +46,14 @@
                                     <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $colors[$application->status] }}">
                                         {{ ucfirst($application->status) }}
                                     </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    @if($application->status === 'pending')
+                                        <a href="{{ route('maalem.applications.edit', $application->id) }}"
+                                           class="text-sm bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-3 py-1 rounded-lg transition">
+                                            Edit
+                                        </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
