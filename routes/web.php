@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientJobController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\MaalemApplicationController;
 use App\Http\Controllers\MaalemDashboardController;
 use App\Http\Controllers\MaalemJobController;
 use App\Http\Controllers\ProfileController;
@@ -48,6 +49,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/jobs', [MaalemJobController::class, 'index'])->name('jobs.index');
         Route::get('/jobs/{id}', [MaalemJobController::class, 'show'])->name('jobs.show');
         Route::post('/jobs/{id}/apply', [MaalemJobController::class, 'store'])->name('jobs.apply');
+        Route::get('/applications', [MaalemApplicationController::class, 'index'])->name('applications.index');
     });
 
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
