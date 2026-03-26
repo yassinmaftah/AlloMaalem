@@ -8,6 +8,7 @@
                 <a href="{{ route('maalem.dashboard') }}" class="hover:text-green-200 font-medium transition">Dashboard</a>
                 <a href="{{ route('maalem.jobs.index') }}" class="hover:text-green-200 font-medium transition">Find Work</a>
                 <a href="{{ route('maalem.applications.index') }}" class="hover:text-green-200 font-medium transition">My Applications</a>
+                <a href="{{ route('maalem.applications.active') }}" class="hover:text-green-200 font-medium transition">Active Missions</a>
                 <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 hover:opacity-80 transition">
                     <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=15803d&color=fff' }}"
                          class="w-8 h-8 rounded-full object-cover border-2 border-white" alt="avatar">
@@ -39,6 +40,7 @@
         <a href="{{ route('maalem.dashboard') }}" class="block text-white hover:bg-green-500 px-3 py-2 rounded-md font-medium">Dashboard</a>
         <a href="{{ route('maalem.jobs.index') }}" class="block text-white hover:bg-green-500 px-3 py-2 rounded-md font-medium">Find Work</a>
         <a href="{{ route('maalem.applications.index') }}" class="block text-white hover:bg-green-500 px-3 py-2 rounded-md font-medium">My Applications</a>
+        <a href="{{ route('maalem.applications.active') }}" class="block text-white hover:bg-green-500 px-3 py-2 rounded-md font-medium">Active Missions</a>
         <form method="POST" action="{{ route('logout') }}" class="mt-2">
             @csrf
             <button type="submit" class="w-full text-left bg-red-500 hover:bg-red-600 px-3 py-2 rounded-md text-white font-bold">Logout</button>
