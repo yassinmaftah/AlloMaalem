@@ -10,6 +10,10 @@ class Application extends Model
     use HasFactory;
     public $timestamps = false;
 
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
+
     protected $fillable = [
         'proposed_price',
         'message',
