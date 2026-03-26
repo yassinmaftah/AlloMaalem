@@ -15,4 +15,14 @@ class MaalemApplicationController extends Controller
 
         return view('maalem.applications.index', compact('applications'));
     }
+
+    public function activeMissions()
+    {
+        $applications = Application::where('user_id', auth()->id())
+            ->where('status', 'accepted')
+            ->with('job.user')
+            ->get();
+
+        return view('maalem.applications.active', compact('applications'));
+    }
 }
