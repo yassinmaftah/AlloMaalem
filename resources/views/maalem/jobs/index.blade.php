@@ -13,6 +13,35 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <h1 class="text-3xl font-bold text-gray-800 mb-8">Available Jobs</h1>
 
+        <div class="bg-white p-4 rounded-lg shadow mb-8 border border-gray-200">
+            <form method="GET" action="{{ route('maalem.jobs.index') }}" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <select name="city_id" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                        <option value="">All Cities</option>
+                        @foreach($cities as $city)
+                            <option value="{{ $city->id }}" {{ request('city_id') == $city->id ? 'selected' : '' }}>{{ $city->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select name="category_id" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                        <option value="">All Categories</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="flex gap-2">
+                    <button type="submit" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition">Filter</button>
+                    <a href="{{ route('maalem.jobs.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg transition text-center">Clear</a>
+                </div>
+            </form>
+        </div>
+        
         @if($jobs->isEmpty())
             <div class="bg-white rounded-lg shadow p-8 text-center text-gray-500">
                 No open jobs available right now.
