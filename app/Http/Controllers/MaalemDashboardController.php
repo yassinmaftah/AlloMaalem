@@ -27,4 +27,13 @@ class MaalemDashboardController extends Controller
 
         return view('maalem.dashboard', compact('pendingApplications', 'activeJobs', 'averageRating'));
     }
+
+    public function reviews()
+    {
+        $reviews = Review::where('reviewed_id', auth()->id())
+            ->with('reviewer', 'job')
+            ->get();
+
+        return view('maalem.reviews', compact('reviews'));
+    }
 }
