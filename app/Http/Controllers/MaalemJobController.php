@@ -8,13 +8,20 @@ use Illuminate\Http\Request;
 
 class MaalemJobController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jobs = Job::where('status', 'open')
-            ->with('category', 'city', 'user')
-            ->paginate(9);
+        $query = Job::where('status', 'open');
 
-        return view('maalem.jobs.index', compact('jobs'));
+        if ($request->city_id)
+            $query->where('city_id', $request->city_id);
+        if ($request->category_id)
+            $query->where('category_id', $request->category_id);
+
+        $jobs = $query->with('category', 'city', 'user')->paginate(9);
+        $categories = \App\Models\Category::all();
+        $cities = \App\Models\City::all();
+
+        return view('maalem.jobs.index', compact('jobs', 'categories', 'cities'));
     }
 
     public function show($id)
@@ -39,9 +46,8 @@ class MaalemJobController extends Controller
             ->where('user_id', auth()->id())
             ->exists();
 
-        if ($alreadyApplied) {
+        if ($alreadyApplied)
             return redirect()->route('maalem.jobs.show', $id)->with('error', 'You have already applied to this job.');
-        }
 
         $request->validate([
             'proposed_price' => 'required|numeric|min:0',
