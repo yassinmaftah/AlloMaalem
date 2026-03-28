@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Category;
-use App\Models\Job;
 use App\Models\Application;
-use App\Models\Review;
+use App\Models\Category;
 use App\Models\City;
+use App\Models\Job;
+use App\Models\Review;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,181 +15,118 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Create 15 cities
         $cities = [
-            'Casablanca',
-            'Rabat',
-            'Marrakech',
-            'Fes',
-            'Tangier',
-            'Agadir',
-            'Meknes',
-            'Oujda',
-            'Kenitra',
-            'Tetouan',
-            'Safi',
-            'Mohammedia',
-            'Khouribga',
-            'El Jadida',
-            'Beni Mellal',
+            'Casablanca', 'Rabat', 'Marrakech', 'Fes', 'Tangier',
+            'Agadir', 'Meknes', 'Oujda', 'Kenitra', 'Tetouan',
+            'Safi', 'Mohammedia', 'Khouribga', 'El Jadida', 'Beni Mellal',
         ];
-
         foreach ($cities as $city) {
             City::create(['name' => $city]);
         }
 
-        // Create 10 categories
         $categories = [
-            'Plomberie',
-            'Électricité',
-            'Peinture',
-            'Menuiserie',
-            'Jardinage',
-            'Maçonnerie',
-            'Carrelage',
-            'Serrurerie',
-            'Climatisation',
-            'Nettoyage',
+            'Plomberie', 'Électricité', 'Peinture', 'Menuiserie', 'Jardinage',
+            'Maçonnerie', 'Carrelage', 'Serrurerie', 'Climatisation', 'Nettoyage',
         ];
-
         foreach ($categories as $cat) {
             Category::create(['name' => $cat]);
         }
 
-        // Create 2 admin users
-        User::create([
-            'name' => 'Admin One',
-            'email' => 'admin1@allomaalem.com',
-            'password' => Hash::make('password123'),
-            'phone' => '0612345678',
-            'role' => 'admin',
-            'is_verified' => true,
-        ]);
+        User::create(['name' => 'Admin One',   'email' => 'admin1@allomaalem.com', 'password' => Hash::make('password123'), 'phone' => '0600000001', 'role' => 'admin',  'is_verified' => true]);
+        User::create(['name' => 'Admin Two',   'email' => 'admin2@allomaalem.com', 'password' => Hash::make('password123'), 'phone' => '0600000002', 'role' => 'admin',  'is_verified' => true]);
+        User::create(['name' => 'Admin Three', 'email' => 'admin3@allomaalem.com', 'password' => Hash::make('password123'), 'phone' => '0600000003', 'role' => 'admin',  'is_verified' => true]);
 
-        User::create([
-            'name' => 'Admin Two',
-            'email' => 'admin2@allomaalem.com',
-            'password' => Hash::make('password123'),
-            'phone' => '0612345679',
-            'role' => 'admin',
-            'is_verified' => true,
-        ]);
-
-        // Create 4 client users
+        $clientData = [
+            ['name' => 'Ahmed Benali',   'email' => 'ahmed@example.com',   'phone' => '0611000001'],
+            ['name' => 'Fatima Zahra',   'email' => 'fatima@example.com',   'phone' => '0611000002'],
+            ['name' => 'Mohammed Karim', 'email' => 'mohammed@example.com', 'phone' => '0611000003'],
+        ];
         $clients = [];
-        $clientNames = ['Ahmed Benali', 'Fatima Zahra', 'Mohammed Karim', 'Layla Hassan'];
-        $clientEmails = ['ahmed@example.com', 'fatima@example.com', 'mohammed@example.com', 'layla@example.com'];
-        $clientPhones = ['0612345680', '0612345681', '0612345682', '0612345683'];
-
-        for ($i = 0; $i < 4; $i++) {
+        foreach ($clientData as $data) {
             $clients[] = User::create([
-                'name' => $clientNames[$i],
-                'email' => $clientEmails[$i],
-                'password' => Hash::make('password123'),
-                'phone' => $clientPhones[$i],
-                'role' => 'client',
+                'name'        => $data['name'],
+                'email'       => $data['email'],
+                'password'    => Hash::make('password123'),
+                'phone'       => $data['phone'],
+                'role'        => 'client',
                 'is_verified' => true,
             ]);
         }
 
-        // Create 4 maalem users
+        $maalemData = [
+            ['name' => 'Hassan Alaoui',   'email' => 'hassan@example.com',  'phone' => '0622000001', 'bio' => 'Électricien professionnel avec 15 ans d\'expérience'],
+            ['name' => 'Youssef Bennani', 'email' => 'youssef@example.com', 'phone' => '0622000002', 'bio' => 'Plombier expert en installations sanitaires'],
+            ['name' => 'Samir Tazi',      'email' => 'samir@example.com',   'phone' => '0622000003', 'bio' => 'Peintre spécialisé en décoration intérieure'],
+        ];
         $maalems = [];
-        $maalemNames = ['Hassan Alaoui', 'Youssef Bennani', 'Samir Tazi', 'Karim Mansouri'];
-        $maalemEmails = ['hassan@example.com', 'youssef@example.com', 'samir@example.com', 'karim@example.com'];
-        $maalemPhones = ['0612345684', '0612345685', '0612345686', '0612345687'];
-        $maalemBios = [
-            'Électricien professionnel avec 15 ans d\'expérience',
-            'Plombier expert en installations sanitaires',
-            'Peintre spécialisé en décoration intérieure',
-            'Menuisier créatif et innovant',
+        foreach ($maalemData as $data) {
+            $maalems[] = User::create([
+                'name'        => $data['name'],
+                'email'       => $data['email'],
+                'password'    => Hash::make('password123'),
+                'phone'       => $data['phone'],
+                'role'        => 'maalem',
+                'bio'         => $data['bio'],
+                'is_verified' => true,
+            ]);
+        }
+
+        $jobTitles = [
+            'Réparation fuite d\'eau',
+            'Installation électrique complète',
+            'Peinture salon et chambre',
+            'Pose de carrelage cuisine',
+            'Réparation porte en bois',
+            'Jardinage et taille de haies',
+            'Installation climatiseur',
+            'Travaux de maçonnerie',
+            'Serrurerie porte principale',
+            'Nettoyage après travaux',
         ];
 
-        for ($i = 0; $i < 4; $i++) {
-            $maalems[] = User::create([
-                'name' => $maalemNames[$i],
-                'email' => $maalemEmails[$i],
-                'password' => Hash::make('password123'),
-                'phone' => $maalemPhones[$i],
-                'role' => 'maalem',
-                'bio' => $maalemBios[$i],
-                'is_verified' => true,
-            ]);
+        $jobs = [];
+        foreach ($clients as $clientIndex => $client) {
+            for ($j = 0; $j < 10; $j++) {
+                $jobs[] = Job::create([
+                    'title'       => $jobTitles[$j],
+                    'description' => 'Description détaillée pour le travail : ' . $jobTitles[$j],
+                    'budget'      => rand(300, 3000),
+                    'status'      => 'open',
+                    'is_urgent'   => ($j % 3 === 0),
+                    'user_id'     => $client->id,
+                    'category_id' => ($j % 10) + 1,
+                    'city_id'     => ($clientIndex * 3 + $j % 3) + 1,
+                ]);
+            }
         }
 
-        // Create some jobs
-        $job1 = Job::create([
-            'title' => 'Réparation fuite d\'eau',
-            'description' => 'Fuite d\'eau dans la cuisine',
-            'budget' => 500,
-            'status' => 'open',
-            'is_urgent' => true,
-            'user_id' => $clients[0]->id,
-            'category_id' => 1,
-            'city_id' => 1,
-        ]);
+        foreach ($maalems as $maalemIndex => $maalem) {
+            $offset = $maalemIndex * 7;
+            $selectedJobs = array_slice($jobs, $offset, 7);
 
-        $job2 = Job::create([
-            'title' => 'Installation électrique',
-            'description' => 'Installation de nouveaux circuits électriques',
-            'budget' => 1500,
-            'status' => 'open',
-            'is_urgent' => false,
-            'user_id' => $clients[1]->id,
-            'category_id' => 2,
-            'city_id' => 2,
-        ]);
+            $statuses = ['accepted', 'accepted', 'pending', 'pending', 'pending', 'pending', 'rejected'];
 
-        $job3 = Job::create([
-            'title' => 'Peinture salon',
-            'description' => 'Peinture complète du salon',
-            'budget' => 800,
-            'status' => 'in_progress',
-            'is_urgent' => false,
-            'user_id' => $clients[2]->id,
-            'category_id' => 3,
-            'city_id' => 3,
-        ]);
+            foreach ($selectedJobs as $i => $job) {
+                Application::create([
+                    'proposed_price' => rand(200, 2500),
+                    'message'        => 'Je suis disponible et qualifié pour ce travail.',
+                    'status'         => $statuses[$i],
+                    'job_id'         => $job->id,
+                    'user_id'        => $maalem->id,
+                ]);
 
-        // Create applications
-        Application::create([
-            'proposed_price' => 450,
-            'message' => 'Je peux faire ce travail rapidement',
-            'status' => 'pending',
-            'job_id' => $job1->id,
-            'user_id' => $maalems[0]->id,
-        ]);
+                if ($statuses[$i] === 'accepted') {
+                    $job->update(['status' => 'in_progress']);
 
-        Application::create([
-            'proposed_price' => 1400,
-            'message' => 'Travail de qualité garanti',
-            'status' => 'accepted',
-            'job_id' => $job2->id,
-            'user_id' => $maalems[1]->id,
-        ]);
-
-        Application::create([
-            'proposed_price' => 750,
-            'message' => 'Je suis disponible immédiatement',
-            'status' => 'accepted',
-            'job_id' => $job3->id,
-            'user_id' => $maalems[2]->id,
-        ]);
-
-        // Create reviews
-        Review::create([
-            'rating' => 5,
-            'comment' => 'Excellent travail, très professionnel',
-            'job_id' => $job2->id,
-            'reviewer_id' => $clients[1]->id,
-            'reviewed_id' => $maalems[1]->id,
-        ]);
-
-        Review::create([
-            'rating' => 4,
-            'comment' => 'Bon travail, rapide et efficace',
-            'job_id' => $job3->id,
-            'reviewer_id' => $clients[2]->id,
-            'reviewed_id' => $maalems[2]->id,
-        ]);
+                    Review::create([
+                        'rating'      => rand(3, 5),
+                        'comment'     => 'Bon travail, professionnel et ponctuel.',
+                        'job_id'      => $job->id,
+                        'reviewer_id' => $job->user_id,
+                        'reviewed_id' => $maalem->id,
+                    ]);
+                }
+            }
+        }
     }
 }
