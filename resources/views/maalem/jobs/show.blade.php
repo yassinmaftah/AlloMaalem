@@ -51,7 +51,11 @@
         <div class="bg-white shadow-md rounded-lg p-6 border-t-4 border-green-500">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Apply for this Job</h2>
 
-            @if($alreadyApplied)
+            @if($job->status !== 'open')
+                <div class="bg-gray-50 border border-gray-300 text-gray-700 p-4 rounded-lg text-center font-semibold">
+                    This job is no longer accepting applications.
+                </div>
+            @elseif($alreadyApplied)
                 <div class="bg-yellow-50 border border-yellow-300 text-yellow-700 p-4 rounded-lg text-center font-semibold">
                     You have already applied to this job.
                 </div>
