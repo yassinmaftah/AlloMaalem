@@ -5,14 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Job;
+use App\Models\Application;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class ClientJobController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jobs = Job::where('user_id', auth()->id())->latest('created_at')->get();
-        return view('client.jobs.index', compact('jobs'));
+        // dd($request);
+        $tab = $request->get('tab', 'all');
+
+        $query = Job::where('user_id', auth()->id())->with('applications');
+
+        if ($tab !== 'all')
+            $query->where('status', $tab);
+
+        $jobs = $query->latest('created_at')->paginate(9)->withQueryString();
+
+        $counts = [
+            'all'         => Job::where('user_id', auth()->id())->count(),
+            'open'        => Job::where('user_id', auth()->id())->where('status', 'open')->count(),
+            'in_progress' => Job::where('user_id', auth()->id())->where('status', 'in_progress')->count(),
+            'completed'   => Job::where('user_id', auth()->id())->where('status', 'completed')->count(),
+        ];
+
+        return view('client.jobs.index', compact('jobs', 'counts', 'tab'));
     }
 
     public function create()
@@ -34,9 +52,8 @@ class ClientJobController extends Controller
         ]);
 
         $imagePath = null;
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('image'))
             $imagePath = $request->file('image')->store('jobs', 'public');
-        }
 
         Job::create([
             'title'       => $request->title,
@@ -119,5 +136,73 @@ class ClientJobController extends Controller
                     ->with('applications.user.reviewsReceived')
                     ->firstOrFail();
         return view('client.jobs.show', compact('job'));
+    }
+
+    public function accept($id)
+    {
+        $offer = Application::find($id);
+        $job = Job::find($offer->job_id);
+
+        if ($job->user_id !== auth()->id())
+            return redirect()->back();
+
+        $offer->status = 'accepted';
+        $offer->save();
+
+        $job->status = 'in_progress';
+        $job->save();
+
+        Application::where('job_id', $job->id)
+            ->where('id', '!=', $offer->id)
+            ->update(['status' => 'rejected']);
+
+        return redirect()->back()->with('success', 'Offer accepted');
+    }
+
+    public function reject($id)
+    {
+        $offer = Application::find($id);
+        $job = Job::find($offer->job_id);
+
+        if ($job->user_id !== auth()->id())
+            return redirect()->back();
+
+        $offer->status = 'rejected';
+        $offer->save();
+
+        return redirect()->back()->with('success', 'Offer rejected');
+    }
+
+    public function complete($id)
+    {
+        $job = Job::find($id);
+
+        if ($job->user_id !== auth()->id())
+            return redirect()->back();
+
+        $job->status = 'completed';
+        $job->save();
+
+        return redirect()->back()->with('success', 'Job marked as completed');
+    }
+
+    public function review(Request $request, $id)
+    {
+        $job = Job::find($id);
+
+        if ($job->user_id !== auth()->id())
+            return redirect()->back();
+
+        $offer = Application::where('job_id', $job->id)->where('status', 'accepted')->first();
+
+        $review = new Review();
+        $review->rating = $request->rating;
+        $review->comment = $request->comment;
+        $review->job_id = $job->id;
+        $review->reviewer_id = auth()->id();
+        $review->reviewed_id = $offer->user_id;
+        $review->save();
+
+        return redirect()->back()->with('success', 'Review added');
     }
 }
