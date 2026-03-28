@@ -43,6 +43,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:client')->prefix('client')->name('client.')->group(function () {
         Route::view('/dashboard', 'client.dashboard')->name('dashboard');
         Route::resource('jobs', ClientJobController::class)->only(['index', 'create', 'show', 'store', 'edit', 'update', 'destroy']);
+        Route::post('/offer/{id}/accept', [ClientJobController::class, 'accept'])->name('offer.accept');
+        Route::post('/offer/{id}/reject', [ClientJobController::class, 'reject'])->name('offer.reject');
+        Route::post('/job/{id}/complete', [ClientJobController::class, 'complete'])->name('jobs.complete');
+        Route::post('/job/{id}/review', [ClientJobController::class, 'review'])->name('jobs.review');
     });
 
     Route::middleware('role:maalem')->prefix('maalem')->name('maalem.')->group(function () {
