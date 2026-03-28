@@ -22,9 +22,8 @@ class ApplicationController extends Controller
             ->where('user_id', auth()->id())
             ->firstOrFail();
 
-        if ($application->status !== 'pending') {
+        if ($application->status !== 'pending')
             return redirect()->route('maalem.applications.index')->with('error', 'You can only edit pending applications.');
-        }
 
         $request->validate([
             'proposed_price' => 'required|numeric|min:0',
