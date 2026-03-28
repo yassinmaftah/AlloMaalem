@@ -26,6 +26,12 @@
                     </form>
                 </div>
             @endif
+            @if ($job->status === 'in_progress')
+                <form method="POST" action="{{ route('client.jobs.complete', $job->id) }}">
+                    @csrf
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition">Mark as Completed</button>
+                </form>
+            @endif
         </div>
 
         @if (session('success'))
@@ -113,8 +119,19 @@
                                     <div class="text-2xl font-bold text-gray-900 mb-1">{{ number_format($app->proposed_price, 2) }} MAD</div>
                                     <span class="text-xs text-gray-400">Proposed price</span>
                                     <div class="flex gap-2 mt-3 justify-end">
-                                        <button class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded transition">Decline</button>
-                                        <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow transition">Accept</button>
+                                        @if($app->status === 'pending')
+                                            <form method="POST" action="{{ route('client.offer.reject', $app->id) }}">
+                                                @csrf
+                                                <button type="submit" class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded transition">Reject</button>
+                                            </form>
+
+                                            <form method="POST" action="{{ route('client.offer.accept', $app->id) }}">
+                                                @csrf
+                                                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow transition">Accept</button>
+                                            </form>
+                                        @else
+                                            <span class="text-sm font-bold text-gray-500 uppercase">{{ $app->status }}</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -123,6 +140,42 @@
                 </div>
             @endif
         </div>
+
+        @if ($job->status === 'completed')
+            <div class="mt-8 bg-white shadow-md rounded-lg p-6 border-t-4 border-blue-600">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Review for Maalem</h2>
+
+                @if (!$job->review)
+                    <form method="POST" action="{{ route('client.jobs.review', $job->id) }}">
+                        @csrf
+                        <div class="mb-4">
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Rating</label>
+                            <select name="rating" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                                <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+                                <option value="4">⭐⭐⭐⭐ (4/5)</option>
+                                <option value="3">⭐⭐⭐ (3/5)</option>
+                                <option value="2">⭐⭐ (2/5)</option>
+                                <option value="1">⭐ (1/5)</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Comment</label>
+                            <textarea name="comment" rows="3" class="w-full border border-gray-300 rounded-lg px-4 py-2"></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition">Submit Review</button>
+                    </form>
+                @else
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <div class="text-yellow-400 text-xl mb-2">
+                            @for ($i = 1; $i <= 5; $i++)
+                                {{ $i <= $job->review->rating ? '⭐' : '☆' }}
+                            @endfor
+                        </div>
+                        <p class="text-gray-700">{{ $job->review->comment }}</p>
+                    </div>
+                @endif
+            </div>
+        @endif
 
     </main>
 
