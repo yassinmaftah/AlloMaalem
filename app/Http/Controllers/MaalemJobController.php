@@ -5,21 +5,33 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Models\Job;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\City;
 
 class MaalemJobController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Job::where('status', 'open');
+        $userId = auth()->id();
+
+        $query = Job::where('status', 'open')
+            ->whereDoesntHave('applications', function ($q) use ($userId) {
+                $q->where('user_id', $userId);
+            });
 
         if ($request->city_id)
             $query->where('city_id', $request->city_id);
+
         if ($request->category_id)
             $query->where('category_id', $request->category_id);
 
+        if ($request->budget)
+            $query->where('budget', '>=', $request->budget);
+
         $jobs = $query->with('category', 'city', 'user')->paginate(9);
-        $categories = \App\Models\Category::all();
-        $cities = \App\Models\City::all();
+
+        $categories = Category::all();
+        $cities = City::all();
 
         return view('maalem.jobs.index', compact('jobs', 'categories', 'cities'));
     }
@@ -27,7 +39,6 @@ class MaalemJobController extends Controller
     public function show($id)
     {
         $job = Job::where('id', $id)
-            ->where('status', 'open')
             ->with('category', 'city', 'user')
             ->firstOrFail();
 
