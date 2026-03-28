@@ -49,16 +49,21 @@ Route::middleware('auth')->group(function () {
         Route::post('/job/{id}/review', [ClientJobController::class, 'review'])->name('jobs.review');
     });
 
-    Route::middleware('role:maalem')->prefix('maalem')->name('maalem.')->group(function () {
+    Route::middleware(['auth', 'role:maalem'])->prefix('maalem')->name('maalem.')->group(function () {
+
         Route::get('/dashboard', [MaalemDashboardController::class, 'index'])->name('dashboard');
-        Route::get('/jobs', [MaalemJobController::class, 'index'])->name('jobs.index');
+        Route::get('/reviews', [MaalemDashboardController::class, 'reviews'])->name('reviews');
+
+        Route::get('/find-work', [MaalemJobController::class, 'index'])->name('jobs.index');
         Route::get('/jobs/{id}', [MaalemJobController::class, 'show'])->name('jobs.show');
         Route::post('/jobs/{id}/apply', [MaalemJobController::class, 'store'])->name('jobs.apply');
-        Route::get('/applications', [MaalemApplicationController::class, 'index'])->name('applications.index');
-        Route::get('/applications/active', [MaalemApplicationController::class, 'activeMissions'])->name('applications.active');
-        Route::get('/applications/{id}/edit', [ApplicationController::class, 'edit'])->name('applications.edit');
-        Route::put('/applications/{id}', [ApplicationController::class, 'update'])->name('applications.update');
-        Route::delete('/applications/{id}', [ApplicationController::class, 'destroy'])->name('applications.destroy');
+
+        Route::get('/my-apps', [MaalemApplicationController::class, 'index'])->name('applications.index');
+        Route::get('/applications/{id}/edit', [MaalemApplicationController::class, 'edit'])->name('applications.edit');
+        Route::put('/applications/{id}', [MaalemApplicationController::class, 'update'])->name('applications.update');
+        Route::delete('/applications/{id}', [MaalemApplicationController::class, 'destroy'])->name('applications.destroy');
+        Route::post('/applications/{id}/reapply', [MaalemApplicationController::class, 'reapply'])->name('applications.reapply');
+
     });
 
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
