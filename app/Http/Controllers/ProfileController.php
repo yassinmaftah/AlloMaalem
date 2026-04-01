@@ -48,4 +48,13 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.edit')->with('success', 'The password is modified successfully');
     }
+
+    public function requestVerification()
+    {
+        $user = auth()->user();
+        $user->verification_status = 'pending';
+        $user->save();
+
+        return redirect()->back()->with('success', 'Request sent to admin');
+    }
 }
