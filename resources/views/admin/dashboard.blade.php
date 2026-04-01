@@ -3,34 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Allo Maalem</title>
+    <title>Dashboard - Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
-
     @include('navbars.adminnav')
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div class="bg-white shadow-lg rounded-lg p-8 border-t-4 border-red-600">
-            <h1 class="text-3xl font-bold text-gray-800 mb-4">
-                Admin Control Panel
-            </h1>
-            <p class="text-gray-600 text-lg mb-6">
-                Welcome back, Boss. From here you can manage all users and monitor the platform's activity.
-            </p>
+    <main class="max-w-7xl mx-auto px-4 py-10">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+            <p class="text-gray-500">Welcome back! Here is what is happening on Allo Maalem today.</p>
+        </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                <div class="bg-gray-50 p-4 rounded border border-gray-200 text-center">
-                    <span class="block text-2xl font-bold text-gray-800">142</span>
-                    <span class="text-sm text-gray-500">Total Users</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-500 flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Total Clients</p>
+                    <h2 class="text-3xl font-bold text-gray-800">{{ $totalClients }}</h2>
                 </div>
-                <div class="bg-gray-50 p-4 rounded border border-gray-200 text-center">
-                    <span class="block text-2xl font-bold text-gray-800">56</span>
-                    <span class="text-sm text-gray-500">Active Jobs</span>
-                </div>
+                <div class="text-blue-500 text-4xl">👤</div>
             </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-orange-500 flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Total Maalems</p>
+                    <h2 class="text-3xl font-bold text-gray-800">{{ $totalMaalems }}</h2>
+                </div>
+                <div class="text-orange-500 text-4xl">🛠️</div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-yellow-500 flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Premium Users</p>
+                    <h2 class="text-3xl font-bold text-gray-800">{{ $premiumUsers }}</h2>
+                </div>
+                <div class="text-yellow-500 text-4xl">⭐</div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500 flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Open Jobs</p>
+                    <h2 class="text-3xl font-bold text-gray-800">{{ $openJobs }}</h2>
+                </div>
+                <div class="text-green-500 text-4xl">📢</div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-purple-500 flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Completed Jobs</p>
+                    <h2 class="text-3xl font-bold text-gray-800">{{ $completedJobs }}</h2>
+                </div>
+                <div class="text-purple-500 text-4xl">✅</div>
+            </div>
+
         </div>
     </main>
-
 </body>
 </html>
