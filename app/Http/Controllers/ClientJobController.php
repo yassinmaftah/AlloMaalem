@@ -42,6 +42,26 @@ class ClientJobController extends Controller
 
     public function store(Request $request)
     {
+        $user = auth()->user();
+
+        if ($user->verification_status !== 'verified') {
+
+            $openJobs = Job::where('user_id', $user->id)
+                ->where('status', 'open')
+                ->count();
+
+            if ($openJobs >= 3)
+                return redirect()->back()->with('error', 'Normal accounts can only have 3 open jobs at a time. Request Premium!');
+
+            $monthJobs = Job::where('user_id', $user->id)
+                ->whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))
+                ->count();
+
+            if ($monthJobs >= 3)
+                return redirect()->back()->with('error', 'Normal accounts can only post 3 jobs per month. Request Premium!');
+        }
+
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'required|string',

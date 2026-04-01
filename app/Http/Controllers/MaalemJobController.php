@@ -51,6 +51,26 @@ class MaalemJobController extends Controller
 
     public function store(Request $request, $id)
     {
+        $user = auth()->user();
+
+        if ($user->verification_status !== 'verified') {
+
+            $pendingApps = Application::where('user_id', $user->id)
+                ->where('status', 'pending')
+                ->count();
+
+            if ($pendingApps >= 3)
+                return redirect()->back()->with('error', 'Normal accounts can only have 3 pending offers at a time. Request Premium!');
+
+            $monthApps = Application::where('user_id', $user->id)
+                ->whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))
+                ->count();
+
+            if ($monthApps >= 10)
+                return redirect()->back()->with('error', 'Normal accounts can only apply to 10 jobs per month. Request Premium!');
+        }
+
         $job = Job::where('id', $id)->where('status', 'open')->firstOrFail();
 
         $alreadyApplied = Application::where('job_id', $id)
