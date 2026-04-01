@@ -14,6 +14,12 @@
         <div class="bg-white shadow-lg rounded-lg p-8 border-t-4 border-blue-600">
             <h1 class="text-2xl font-bold text-gray-800 mb-6">Post a New Job</h1>
 
+            @if(session('error'))
+                <div class="bg-red-100 text-red-700 p-4 rounded mb-6 font-bold">
+                    {{ session('error') }}
+                </div>
+            @endif
+            
             @if ($errors->any())
                 <div class="bg-red-100 text-red-700 p-4 rounded mb-6">
                     <ul class="list-disc pl-5">
