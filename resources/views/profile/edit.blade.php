@@ -24,6 +24,39 @@
             </div>
         @endif
 
+        @if(auth()->user()->role !== "admin")
+        <div class="bg-white shadow-lg rounded-lg p-8 border-t-4 border-yellow-500 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Premium Account</h2>
+
+
+                @if(auth()->user()->verification_status === 'verified')
+                    <div class="bg-green-100 text-green-800 p-4 rounded-lg flex items-center gap-3">
+                        <span class="text-2xl">⭐</span>
+                        <div>
+                            <p class="font-bold">You are a Premium Verified User!</p>
+                            <p class="text-sm">You have no limits on jobs or applications.</p>
+                        </div>
+                    </div>
+                @elseif(auth()->user()->verification_status === 'pending')
+                    <div class="bg-yellow-100 text-yellow-800 p-4 rounded-lg">
+                        <p class="font-bold">⏳ Your request is pending</p>
+                        <p class="text-sm">The admin is reviewing your account.</p>
+                    </div>
+                @else
+                    <div class="bg-gray-100 text-gray-800 p-4 rounded-lg mb-4">
+                        <p class="font-bold">You have a Normal Account.</p>
+                        <p class="text-sm">Normal accounts have limits. Upgrade to Premium to remove limits.</p>
+                    </div>
+                    <form method="POST" action="{{ route('profile.verify') }}">
+                        @csrf
+                        <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-lg transition">
+                            Request Premium Account
+                        </button>
+                    </form>
+                @endif
+            @endif
+        </div>
+
         <div class="bg-white shadow-lg rounded-lg p-8 border-t-4 border-blue-600">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Edit Profile</h2>
 
@@ -56,12 +89,14 @@
                     @error('phone') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Bio</label>
-                    <textarea name="bio" rows="3"
-                              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 @error('bio') border-red-500 @enderror">{{ old('bio', $user->bio) }}</textarea>
-                    @error('bio') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                </div>
+                @if(auth()->user()->role !== "admin")
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Bio</label>
+                        <textarea name="bio" rows="3"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 @error('bio') border-red-500 @enderror">{{ old('bio', $user->bio) }}</textarea>
+                        @error('bio') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
+                @endif
 
                 <button type="submit"
                         class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition">
