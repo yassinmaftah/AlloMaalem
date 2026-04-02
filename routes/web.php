@@ -82,5 +82,9 @@ Route::middleware(['check.banned' , 'auth'])->group(function () {
 
         Route::post('/users/{id}/ban', [AdminUserController::class, 'ban'])->name('users.ban');
         Route::post('/users/{id}/unban', [AdminUserController::class, 'unban'])->name('users.unban');
+
+        Route::get('/categories', [App\Http\Controllers\AdminCategoryController::class, 'index'])->name('categories.index');
+        Route::post('/categories', [App\Http\Controllers\AdminCategoryController::class, 'store'])->name('categories.store');
+        Route::post('/categories/{id}/delete', [App\Http\Controllers\AdminCategoryController::class, 'destroy'])->name('categories.destroy');
     });
 });

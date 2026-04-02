@@ -8,6 +8,7 @@
                 <a href="{{ route('admin.dashboard') }}" class="hover:text-gray-300 font-medium transition">Dashboard</a>
                 <a href="{{ route('admin.users.index') }}" class="hover:text-gray-300 font-medium transition">Manage Users</a>
                 <a href="{{ route('admin.requests.index') }}" class="hover:text-gray-300 font-medium transition">Pending Requests</a>
+                <a href="{{ route('admin.categories.index') }}" class="hover:text-gray-300 font-medium transition">Categories</a>
 
                 <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 hover:opacity-80 transition ml-4">
                     <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=374151&color=fff' }}"
@@ -40,6 +41,7 @@
         <a href="{{ route('admin.dashboard') }}" class="block text-white hover:bg-gray-700 px-3 py-2 rounded-md font-medium">Dashboard</a>
         <a href="{{ route('admin.users.index') }}" class="block text-white hover:bg-gray-700 px-3 py-2 rounded-md font-medium">Manage Users</a>
         <a href="{{ route('admin.requests.index') }}" class="block text-white hover:bg-gray-700 px-3 py-2 rounded-md font-medium">Pending Requests</a>
+        <a href="{{ route('admin.categories.index') }}" class="hover:text-gray-300 font-medium transition">Categories</a>
 
         <form method="POST" action="{{ route('logout') }}" class="mt-4">
             @csrf
