@@ -12,7 +12,7 @@ use App\Http\Controllers\MaalemJobController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminUserController;
 // use App\Http\Middleware\CheckBannedUser;
-
+use App\Http\Controllers\AdminSettingController;
 Route::view('/', 'welcome');
 
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
@@ -83,8 +83,12 @@ Route::middleware(['check.banned' , 'auth'])->group(function () {
         Route::post('/users/{id}/ban', [AdminUserController::class, 'ban'])->name('users.ban');
         Route::post('/users/{id}/unban', [AdminUserController::class, 'unban'])->name('users.unban');
 
-        Route::get('/categories', [App\Http\Controllers\AdminCategoryController::class, 'index'])->name('categories.index');
-        Route::post('/categories', [App\Http\Controllers\AdminCategoryController::class, 'store'])->name('categories.store');
-        Route::post('/categories/{id}/delete', [App\Http\Controllers\AdminCategoryController::class, 'destroy'])->name('categories.destroy');
+        Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings.index');
+
+        Route::post('/settings/categories', [AdminSettingController::class, 'storeCategory'])->name('categories.store');
+        Route::post('/settings/categories/{id}/delete', [AdminSettingController::class, 'destroyCategory'])->name('categories.destroy');
+
+        Route::post('/settings/cities', [AdminSettingController::class, 'storeCity'])->name('cities.store');
+        Route::post('/settings/cities/{id}/delete', [AdminSettingController::class, 'destroyCity'])->name('cities.destroy');
     });
 });
