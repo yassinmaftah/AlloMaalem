@@ -44,7 +44,7 @@
                     <form method="POST" action="{{ route('admin.categories.store') }}">
                         @csrf
                         <div class="mb-4">
-                            <input type="text" name="name" placeholder="e.g. Plumber, Electrician" class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <input type="text" name="name" placeholder="Plumber, Electrician" class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         </div>
                         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">Save Category</button>
                     </form>
@@ -83,7 +83,7 @@
                     <form method="POST" action="{{ route('admin.cities.store') }}">
                         @csrf
                         <div class="mb-4">
-                            <input type="text" name="name" placeholder="e.g. Casablanca, Rabat" class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <input type="text" name="name" placeholder="Casablanca, Rabat" class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         </div>
                         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">Save City</button>
                     </form>
