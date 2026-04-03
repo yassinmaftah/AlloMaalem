@@ -161,10 +161,14 @@ class ClientJobController extends Controller
     public function accept($id)
     {
         $offer = Application::find($id);
+        if (!$offer)
+            return redirect()->back()->with('error', 'This offer was not found or has been deleted.');
+
+
         $job = Job::find($offer->job_id);
 
         if ($job->user_id !== auth()->id())
-            return redirect()->back();
+            return redirect()->back('error', 'This job is not for you');
 
         $offer->status = 'accepted';
         $offer->save();

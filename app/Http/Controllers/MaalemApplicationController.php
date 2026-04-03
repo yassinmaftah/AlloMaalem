@@ -73,12 +73,22 @@ class MaalemApplicationController extends Controller
 
     public function destroy($id)
     {
-        $app = Application::findOrFail($id);
+        $app = Application::find($id);
+
+        if (!$app)
+        {
+
+            // dd("hi");
+            return redirect()->back()->with('error', 'This application was not found.');
+            }
         if ($app->user_id !== auth()->id())
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Unauthorized action.');
+        if ($app->job->status !== 'open')
+            return redirect()->back()->with('success', 'You cannot delete this application because the Client just accepted your offer. It has been moved to your accepted tab!');
 
         $app->delete();
-        return redirect()->back();
+
+        return redirect()->back()->with('success', 'Application deleted successfully.');
     }
 
     public function reapply(Request $request, $id)
