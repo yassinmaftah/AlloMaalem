@@ -10,15 +10,17 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
-        $totalClients = User::where('role', 'client')->count();
-        $totalMaalems = User::where('role', 'maalem')->count();
-        $premiumUsers = User::where('verification_status', 'verified')->count();
+        $stats = [
+            'total_clients' => User::where('role', 'client')->count(),
+            'total_maalems' => User::where('role', 'maalem')->count(),
+            'total_admins' => User::where('role', 'admin')->count(),
+            'premium_users' => User::where('verification_status', 'verified')->count(),
+            'open_jobs'     => Job::where('status', 'open')->count(),
+        ];
 
-        $openJobs = Job::where('status', 'open')->count();
-        $completedJobs = Job::where('status', 'completed')->count();
+        $recentUsers = User::orderBy('created_at', 'desc')->get();
+        $recentJobs = Job::with('user')->orderBy('created_at', 'desc')->get();
 
-        return view('admin.dashboard', compact(
-            'totalClients', 'totalMaalems', 'premiumUsers', 'openJobs', 'completedJobs'
-        ));
+        return view('admin.dashboard', compact('stats', 'recentUsers', 'recentJobs'));
     }
 }
