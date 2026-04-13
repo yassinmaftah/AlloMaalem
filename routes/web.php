@@ -1,18 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ClientJobController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Client\ClientJobController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ForgotPasswordController;
-// use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\MaalemApplicationController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Maalem\MaalemApplicationController;
 use App\Http\Controllers\MaalemDashboardController;
-use App\Http\Controllers\MaalemJobController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AdminUserController;
-// use App\Http\Middleware\CheckBannedUser;
-use App\Http\Controllers\AdminSettingController;
+use App\Http\Controllers\Maalem\MaalemJobController;
+use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminSettingController;
 Route::view('/', 'welcome');
 
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
@@ -72,7 +70,7 @@ Route::middleware(['check.banned' , 'auth'])->group(function () {
     });
 
     Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/pending-requests', [AdminUserController::class, 'pendingRequests'])->name('requests.index');
         Route::post('/users/{id}/approve',  [AdminUserController::class, 'approve'])->name('users.approve');
