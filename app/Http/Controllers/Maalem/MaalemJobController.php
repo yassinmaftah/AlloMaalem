@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\City;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SystemNotificationMail;
+
+
 class MaalemJobController extends Controller
 {
     public function index(Request $request)
@@ -93,6 +97,11 @@ class MaalemJobController extends Controller
             'message'        => $request->message,
             'status'         => 'pending',
         ]);
+
+        $client = $job->user;
+        $message = "Good news! A Maalem named " . auth()->user()->name . " has applied to your job: " . $job->title;
+
+        Mail::to($client->email)->send(new SystemNotificationMail($message));
 
         return redirect()->route('maalem.jobs.show', $id)->with('success', 'Application submitted successfully!');
     }

@@ -7,8 +7,13 @@ use App\Models\Category;
 use App\Models\City;
 use App\Models\Job;
 use App\Models\Application;
+use App\Models\User;
 use App\Models\Review;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SystemNotificationMail;
+
 
 class ClientJobController extends Controller
 {
@@ -133,6 +138,18 @@ class ClientJobController extends Controller
             'image'       => $imagePath,
         ]);
 
+        // $ids_of_users_already_Apply = Application::where('job_id', $job->id)->pluck('user_id')->toArray();
+        // // dd($ids_of_users_already_Apply);
+        // $i = 0;
+        // while($i < count($ids_of_users_already_Apply) )
+        // {
+        //     $user = User::find($ids_of_users_already_Apply[$i]);
+        //     $message = "A job you applied for has been updated";
+        //     // echo $user->email;
+        //     Mail::to($user->email)->send(new SystemNotificationMail($message));
+        //     $i++;
+        // }
+
         return redirect()->route('client.jobs.show', $job->id)->with('success', 'Job updated successfully!');
     }
 
@@ -180,6 +197,11 @@ class ClientJobController extends Controller
         Application::where('job_id', $job->id)
             ->where('id', '!=', $offer->id)
             ->update(['status' => 'rejected']);
+
+
+        $maalem = $offer->user;
+        $message = "Your application for the job '" . $job->title . "' has been " . $job->status . " by the client.";
+        Mail::to($maalem->email)->send(new SystemNotificationMail($message));
 
         return redirect()->back()->with('success', 'Offer accepted');
     }
