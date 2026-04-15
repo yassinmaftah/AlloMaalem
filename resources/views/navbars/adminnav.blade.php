@@ -1,57 +1,88 @@
-<nav class="bg-gray-900 shadow-md border-b border-gray-700">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center text-white">
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
 
-            <a href="{{ route('admin.dashboard') }}" class="text-xl font-bold tracking-wider text-red-500">🛡️ Admin Panel</a>
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 group">
+                <span class="material-symbols-outlined text-blue-800 group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">shield_person</span>
+                <span class="font-manrope text-xl font-extrabold tracking-tight text-blue-900">Allo Admin</span>
+            </a>
 
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="{{ route('admin.dashboard') }}" class="hover:text-gray-300 font-medium transition">Dashboard</a>
-                <a href="{{ route('admin.users.index') }}" class="hover:text-gray-300 font-medium transition">Manage Users</a>
-                <a href="{{ route('admin.requests.index') }}" class="hover:text-gray-300 font-medium transition">Pending Requests</a>
-                <a href="{{ route('admin.settings.index') }}" class="hover:text-gray-300 font-medium transition">Settings</a>
+            <div class="hidden md:flex items-center space-x-1 lg:space-x-4">
+                <a href="{{ route('admin.dashboard') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Dashboard</a>
+                <a href="{{ route('admin.users.index') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Manage Users</a>
+                <a href="{{ route('admin.requests.index') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Pending Requests</a>
+                <a href="{{ route('admin.settings.index') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Settings</a>
+            </div>
 
-                <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 hover:opacity-80 transition ml-4">
-                    <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=374151&color=fff' }}"
-                         class="w-8 h-8 rounded-full object-cover border-2 border-gray-500" alt="avatar">
-                    <span class="font-medium text-gray-300">{{ Auth::user()->name }}</span>
+            <div class="hidden md:flex items-center gap-4 pl-4 border-l border-gray-200">
+                <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=00288e&color=fff' }}"
+                         class="w-8 h-8 rounded-full object-cover border-2 border-blue-100 shadow-sm" alt="avatar">
+                    <span class="font-inter text-sm font-bold text-slate-800">{{ Auth::user()->name }}</span>
                 </a>
+
                 <form method="POST" action="{{ route('logout') }}" class="m-0">
                     @csrf
-                    <button type="submit" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-bold transition">Logout</button>
+                    <button type="submit" class="flex items-center gap-1 bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 px-3 py-1.5 rounded-lg text-sm font-bold transition-colors border border-red-100">
+                        <span class="material-symbols-outlined text-[18px]">logout</span>
+                        Logout
+                    </button>
                 </form>
             </div>
 
             <div class="md:hidden flex items-center">
-                <button id="mobile-btn-admin" class="text-gray-300 hover:text-white focus:outline-none">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
+                <button id="mobile-btn-admin" class="text-slate-600 hover:text-blue-800 focus:outline-none p-2 rounded-lg hover:bg-slate-100 transition-colors">
+                    <span class="material-symbols-outlined text-2xl" id="mobile-icon">menu</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="mobile-menu-admin" class="hidden md:hidden bg-gray-800 px-4 pt-2 pb-4 space-y-2 shadow-inner">
-        <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 pb-2 border-b border-gray-600 mb-2">
-            <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=374151&color=fff' }}"
-                 class="w-8 h-8 rounded-full object-cover border-2 border-gray-500" alt="avatar">
-            <span class="text-gray-400 font-medium">{{ Auth::user()->name }}</span>
-        </a>
-        <a href="{{ route('profile.edit') }}" class="block text-white hover:bg-gray-700 px-3 py-2 rounded-md font-medium">Profile</a>
-        <a href="{{ route('admin.dashboard') }}" class="block text-white hover:bg-gray-700 px-3 py-2 rounded-md font-medium">Dashboard</a>
-        <a href="{{ route('admin.users.index') }}" class="block text-white hover:bg-gray-700 px-3 py-2 rounded-md font-medium">Manage Users</a>
-        <a href="{{ route('admin.requests.index') }}" class="block text-white hover:bg-gray-700 px-3 py-2 rounded-md font-medium">Pending Requests</a>
-        <a href="{{ route('admin.settings.index') }}" class="block text-white hover:bg-gray-700 px-3 py-2 rounded-md font-medium">Settings</a>
+    <div id="mobile-menu-admin" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full left-0">
+        <div class="px-4 pt-2 pb-6 space-y-1">
+            <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 py-4 border-b border-gray-100 mb-2">
+                <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=00288e&color=fff' }}"
+                     class="w-10 h-10 rounded-full object-cover border-2 border-blue-100 shadow-sm" alt="avatar">
+                <div>
+                    <div class="font-inter text-sm font-bold text-slate-800">{{ Auth::user()->name }}</div>
+                    <div class="font-inter text-xs font-medium text-slate-500">Administrator</div>
+                </div>
+            </a>
 
-        <form method="POST" action="{{ route('logout') }}" class="mt-4">
-            @csrf
-            <button type="submit" class="w-full text-left bg-red-600 hover:bg-red-700 px-3 py-2 rounded-md text-white font-bold">Logout</button>
-        </form>
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">
+                <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
+            </a>
+            <a href="{{ route('admin.users.index') }}" class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">
+                <span class="material-symbols-outlined text-[20px]">group</span> Manage Users
+            </a>
+            <a href="{{ route('admin.requests.index') }}" class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">
+                <span class="material-symbols-outlined text-[20px]">pending_actions</span> Pending Requests
+            </a>
+            <a href="{{ route('admin.settings.index') }}" class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">
+                <span class="material-symbols-outlined text-[20px]">settings</span> Settings
+            </a>
+
+            <form method="POST" action="{{ route('logout') }}" class="mt-4 pt-4 border-t border-gray-100">
+                @csrf
+                <button type="submit" class="w-full flex items-center justify-center gap-2 bg-red-50 text-red-600 hover:bg-red-100 px-3 py-3 rounded-lg font-inter font-bold transition-colors border border-red-100">
+                    <span class="material-symbols-outlined text-[20px]">logout</span> Logout
+                </button>
+            </form>
+        </div>
     </div>
 </nav>
 
 <script>
     document.getElementById('mobile-btn-admin').addEventListener('click', function() {
-        document.getElementById('mobile-menu-admin').classList.toggle('hidden');
+        const menu = document.getElementById('mobile-menu-admin');
+        const icon = document.getElementById('mobile-icon');
+
+        menu.classList.toggle('hidden');
+
+        if (menu.classList.contains('hidden')) {
+            icon.innerText = 'menu';
+        } else {
+            icon.innerText = 'close';
+        }
     });
 </script>
