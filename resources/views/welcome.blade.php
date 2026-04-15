@@ -92,7 +92,7 @@
     </style>
 </head>
 <body class="bg-surface font-body text-on-surface">
-
+ 
     <header class="sticky top-0 w-full z-50 glass-header shadow-sm dark:shadow-none">
         <div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
             <div class="flex items-center gap-3">
