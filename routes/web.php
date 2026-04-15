@@ -11,6 +11,7 @@ use App\Http\Controllers\Maalem\MaalemJobController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminSettingController;
+use App\Http\Controllers\ClientDashboardController;
 Route::view('/', 'welcome');
 
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
@@ -44,7 +45,9 @@ Route::middleware(['check.banned' , 'auth'])->group(function () {
     Route::post('/profile/verify', [ProfileController::class, 'requestVerification'])->name('profile.verify');
 
     Route::middleware('role:client')->prefix('client')->name('client.')->group(function () {
-        Route::view('/dashboard', 'client.dashboard')->name('dashboard');
+        // Route::view('/dashboard', 'client.dashboard')->name('dashboard');
+        Route::get('/dashboard', [ClientDashboardController::class, 'index'])->name('dashboard');
+
         Route::resource('jobs', ClientJobController::class)->only(['index', 'create', 'show', 'store', 'edit', 'update', 'destroy']);
         Route::post('/offer/{id}/accept', [ClientJobController::class, 'accept'])->name('offer.accept');
         Route::post('/offer/{id}/reject', [ClientJobController::class, 'reject'])->name('offer.reject');
