@@ -18,6 +18,13 @@ class Review extends Model
         'reviewed_id',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+        ];
+    }
+
     public function job(){return $this->belongsTo(Job::class);}
     public function reviewer(){return $this->belongsTo(User::class, 'reviewer_id');}
     public function reviewed(){return $this->belongsTo(User::class, 'reviewed_id');}
