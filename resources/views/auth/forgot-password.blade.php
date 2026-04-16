@@ -139,7 +139,6 @@
 
                 <button type="submit" class="w-full bg-primary text-on-primary py-4 px-6 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-blue-800 shadow-lg shadow-primary/20 transition-all duration-300 active:scale-[0.98] group">
                     <span>Send Code</span>
-                    <span class="material-symbols-outlined text-xl transition-transform group-hover:translate-x-1" data-icon="send">send</span>
                 </button>
             </form>
 
