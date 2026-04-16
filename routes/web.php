@@ -12,7 +12,7 @@ use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\ClientDashboardController;
-Route::view('/', 'welcome');
+Route::view('/', 'welcome')->name('welcome');
 
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
     Route::get('/register', 'showRegister')->name('register');
