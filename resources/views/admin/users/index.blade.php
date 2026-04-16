@@ -102,7 +102,6 @@
         <section class="mb-12">
             <form method="GET" action="{{ route('admin.users.index') }}" class="bg-surface-container-lowest rounded-xl p-6 user-card-shadow flex flex-col md:flex-row gap-4 items-center">
                 <div class="relative flex-grow w-full">
-                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="person_search">person_search</span>
                     <input name="search" value="{{ request('search') }}" class="w-full pl-12 pr-4 py-3 bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline font-label" placeholder="Search users by name..." type="text"/>
                 </div>
                 <div class="flex gap-3 w-full md:w-auto">
@@ -120,9 +119,6 @@
 
         @if($users->isEmpty())
             <section class="flex flex-col items-center justify-center py-24 text-center">
-                <div class="bg-surface-container rounded-full p-8 mb-6">
-                    <span class="material-symbols-outlined text-outline text-6xl" data-icon="search_off">search_off</span>
-                </div>
                 <h2 class="font-headline font-bold text-2xl text-on-surface">No users found</h2>
                 <p class="text-secondary max-w-sm mt-2">We couldn't find any accounts matching your search criteria. Try broadening your terms.</p>
                 <a href="{{ route('admin.users.index') }}" class="mt-8 font-bold text-primary hover:underline">Reset Filters</a>
