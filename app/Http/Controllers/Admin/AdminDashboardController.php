@@ -19,8 +19,8 @@ class AdminDashboardController extends Controller
             'open_jobs'     => Job::where('status', 'open')->count(),
         ];
 
-        $recentUsers = User::orderBy('created_at', 'desc')->get();
-        $recentJobs = Job::with('user')->orderBy('created_at', 'desc')->get();
+        $recentUsers = User::orderBy('created_at', 'desc')->limit(15)->get();
+        $recentJobs = Job::with('user')->orderBy('created_at', 'desc')->limit(15)->get();
 
         return view('admin.dashboard', compact('stats', 'recentUsers', 'recentJobs'));
     }
