@@ -10,9 +10,9 @@
             <div class="hidden md:flex items-center space-x-1 lg:space-x-4">
                 <a href="{{ route('admin.dashboard') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Dashboard</a>
                 <a href="{{ route('admin.users.index') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Manage Users</a>
-                <a href="{{ route('admin.requests.index') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Pending Requests</a>
                 <a href="{{ route('admin.settings.index') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Settings</a>
-            </div>
+                <a href="{{ route('admin.users.premium') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Premium Maalems</a>
+                <a href="{{ route('admin.payments') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Financial Reports</a>            </div>
 
             <div class="hidden md:flex items-center gap-4 pl-4 border-l border-gray-200">
                 <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
@@ -49,18 +49,12 @@
                 </div>
             </a>
 
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">
-                <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
-            </a>
-            <a href="{{ route('admin.users.index') }}" class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">
-                <span class="material-symbols-outlined text-[20px]">group</span> Manage Users
-            </a>
-            <a href="{{ route('admin.requests.index') }}" class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">
-                <span class="material-symbols-outlined text-[20px]">pending_actions</span> Pending Requests
-            </a>
-            <a href="{{ route('admin.settings.index') }}" class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">
-                <span class="material-symbols-outlined text-[20px]">settings</span> Settings
-            </a>
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">Dashboard</a>
+            <a href="{{ route('admin.users.index') }}" class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">Manage Users</a>
+            <a href="{{ route('admin.settings.index') }}" class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">Settings</a>
+            <a href="{{ route('admin.users.premium') }}" class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">Premium Maalems</a>
+            <a href="{{ route('admin.payments') }}"class="flex items-center gap-2 text-slate-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-3 rounded-lg font-inter font-semibold transition-colors">Financial Reports</a>
+
 
             <form method="POST" action="{{ route('logout') }}" class="mt-4 pt-4 border-t border-gray-100">
                 @csrf
@@ -79,10 +73,10 @@
 
         menu.classList.toggle('hidden');
 
-        if (menu.classList.contains('hidden')) {
+        if (menu.classList.contains('hidden'))
             icon.innerText = 'menu';
-        } else {
+        else
             icon.innerText = 'close';
-        }
+
     });
 </script>
