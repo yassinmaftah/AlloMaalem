@@ -12,6 +12,8 @@ use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\ClientDashboardController;
+use App\Http\Controllers\StripePaymentController;
+
 Route::view('/', 'welcome')->name('welcome');
 
 Route::middleware('guest')->controller(AuthController::class)->group(function () {
@@ -32,6 +34,12 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware(['check.banned' , 'auth'])->group(function () {
+
+    Route::post('/upgrade/checkout', [StripePaymentController::class, 'checkout'])->name('stripe.checkout');
+    Route::get('/upgrade/success', [StripePaymentController::class, 'success'])->name('stripe.success');
+    Route::get('/upgrade/cancel', [StripePaymentController::class, 'cancel'])->name('stripe.cancel');
+
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -75,9 +83,9 @@ Route::middleware(['check.banned' , 'auth'])->group(function () {
     Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard');
 
-        Route::get('/pending-requests', [AdminUserController::class, 'pendingRequests'])->name('requests.index');
-        Route::post('/users/{id}/approve',  [AdminUserController::class, 'approve'])->name('users.approve');
-        Route::post('/users/{id}/reject', [AdminUserController::class, 'reject'])->name('users.reject');
+        // Route::get('/pending-requests', [AdminUserController::class, 'pendingRequests'])->name('requests.index');
+        // Route::post('/users/{id}/approve',  [AdminUserController::class, 'approve'])->name('users.approve');
+        // Route::post('/users/{id}/reject', [AdminUserController::class, 'reject'])->name('users.reject');
 
         Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
 
@@ -91,5 +99,10 @@ Route::middleware(['check.banned' , 'auth'])->group(function () {
 
         Route::post('/settings/cities', [AdminSettingController::class, 'storeCity'])->name('cities.store');
         Route::post('/settings/cities/{id}/delete', [AdminSettingController::class, 'destroyCity'])->name('cities.destroy');
+
+        Route::get('/premium-users', [AdminUserController::class, 'premiumUsers'])->name('users.premium');
+        Route::post('/users/{id}/revoke', [AdminUserController::class, 'revoke'])->name('users.revoke');
+
+        Route::get('/payment-history', [AdminUserController::class, 'paymentHistory'])->name('payments');
     });
 });
