@@ -151,12 +151,12 @@
                             <div class="flex items-center gap-2">
                                 <h3 class="text-lg font-bold text-on-surface">Normal Account</h3>
                             </div>
-                            <p class="text-secondary text-sm">Normal accounts have limits. Upgrade to Premium to remove limits.</p>
+                            <p class="text-secondary text-sm">Normal accounts have limits. Upgrade to Premium to remove limits for a one-time fee of $29.</p>
                         </div>
-                        <form method="POST" action="{{ route('profile.verify') }}">
+                        <form method="POST" action="{{ route('stripe.checkout') }}">
                             @csrf
-                            <button type="submit" class="bg-[#FDB931] hover:bg-[#e6a82d] text-on-tertiary-fixed font-bold py-3 px-6 rounded-xl transition-all active:scale-95 shadow-md shadow-yellow-900/10 whitespace-nowrap">
-                                Request Premium Account
+                            <button type="submit" class="bg-[#FDB931] hover:bg-[#e6a82d] text-on-tertiary-fixed font-bold py-3 px-6 rounded-xl transition-all active:scale-95 shadow-md shadow-yellow-900/10 whitespace-nowrap flex items-center gap-2">
+                                Pay ${{ auth()->user()->role === 'client' ? '29.99' : '15.99' }} to Upgrade
                             </button>
                         </form>
                     </div>
