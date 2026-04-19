@@ -7,33 +7,34 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Application;
 use App\Models\Job;
+use App\Models\Payment;
 
 class AdminUserController extends Controller
 {
-    public function pendingRequests()
-    {
-        $users = User::where('verification_status', 'pending')->get();
+    // public function pendingRequests()
+    // {
+    //     $users = User::where('verification_status', 'pending')->get();
 
-        return view('admin.requests.index', compact('users'));
-    }
+    //     return view('admin.requests.index', compact('users'));
+    // }
 
-    public function approve($id)
-    {
-        $user = User::findOrFail($id);
-        $user->verification_status = 'verified';
-        $user->save();
+    // public function approve($id)
+    // {
+    //     $user = User::findOrFail($id);
+    //     $user->verification_status = 'verified';
+    //     $user->save();
 
-        return redirect()->back()->with('success', $user->name . ' is now a Premium user!');
-    }
+    //     return redirect()->back()->with('success', $user->name . ' is now a Premium user!');
+    // }
 
-    public function reject($id)
-    {
-        $user = User::findOrFail($id);
-        $user->verification_status = 'unverified';
-        $user->save();
+    // public function reject($id)
+    // {
+    //     $user = User::findOrFail($id);
+    //     $user->verification_status = 'unverified';
+    //     $user->save();
 
-        return redirect()->back()->with('success', $user->name . ' request was rejected.');
-    }
+    //     return redirect()->back()->with('success', $user->name . ' request was rejected.');
+    // }
 
     public function index(Request $request)
     {
@@ -75,5 +76,28 @@ class AdminUserController extends Controller
         $user->save();
 
         return redirect()->back()->with('success', $user->name . ' has been unbanned.');
+    }
+
+    public function premiumUsers()
+    {
+        $users = User::where('verification_status', 'verified')->get();
+
+        return view('admin.users.premium', compact('users'));
+    }
+
+    public function revoke($id)
+    {
+        $user = User::findOrFail($id);
+        $user->verification_status = 'unverified';
+        $user->save();
+
+        return redirect()->back()->with('success', $user->name . '\'s premium status has been revoked.');
+    }
+
+    public function paymentHistory()
+    {
+        $payments = Payment::latest()->get();
+        $totalRevenue = Payment::sum('price');
+        return view('admin.payments.index', compact('payments', 'totalRevenue'));
     }
 }
