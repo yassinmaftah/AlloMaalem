@@ -11,7 +11,7 @@
                 <a href="{{ route('admin.dashboard') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Dashboard</a>
                 <a href="{{ route('admin.users.index') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Manage Users</a>
                 <a href="{{ route('admin.settings.index') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Settings</a>
-                <a href="{{ route('admin.users.premium') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Premium Maalems</a>
+                <a href="{{ route('admin.users.premium') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Premium Users</a>
                 <a href="{{ route('admin.payments') }}" class="px-3 py-2 rounded-lg font-inter text-sm font-semibold text-slate-600 hover:text-blue-800 hover:bg-blue-50 transition-colors">Financial Reports</a>            </div>
 
             <div class="hidden md:flex items-center gap-4 pl-4 border-l border-gray-200">
