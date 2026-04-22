@@ -188,6 +188,9 @@ class ClientJobController extends Controller
         if ($job->user_id !== auth()->id())
             return redirect()->back()->with('error', 'This job is not for you');
 
+        if ($job->status !== 'open')
+            return redirect()->back()->with('error', 'You have already assigned this job to someone else!');
+
         if ($request->expected_price != $offer->proposed_price)
         {
             return redirect()->back()->with('error',
