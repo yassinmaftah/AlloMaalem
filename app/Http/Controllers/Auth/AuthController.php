@@ -19,7 +19,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|confirmed',
             'phone' => 'required|string|max:20',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'role' => 'required|in:client,maalem',
         ]);
 
@@ -40,7 +40,7 @@ class AuthController extends Controller
         Auth::login($user);
         return redirect()->route('dashboard');
     }
- 
+
     public function showLogin(){return view('auth.login');}
 
     public function login(Request $request)
