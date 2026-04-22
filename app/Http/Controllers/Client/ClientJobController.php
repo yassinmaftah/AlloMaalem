@@ -176,7 +176,7 @@ class ClientJobController extends Controller
         return view('client.jobs.show', compact('job'));
     }
 
-    public function accept($id)
+    public function accept(Request $request, $id)
     {
         $offer = Application::find($id);
         if (!$offer)
@@ -186,7 +186,15 @@ class ClientJobController extends Controller
         $job = Job::find($offer->job_id);
 
         if ($job->user_id !== auth()->id())
-            return redirect()->back('error', 'This job is not for you');
+            return redirect()->back()->with('error', 'This job is not for you');
+
+        if ($request->expected_price != $offer->proposed_price)
+        {
+            return redirect()->back()->with('error',
+                'Wait! The Maalem just updated their price to ' . $offer->proposed_price . ' MAD. Please review the new offer before accepting.'
+            );
+        }
+
 
         $offer->status = 'accepted';
         $offer->save();
