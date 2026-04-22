@@ -76,7 +76,10 @@ class MaalemJobController extends Controller
                 return redirect()->back()->with('error', 'Normal accounts can only apply to 10 jobs per month. Request Premium!');
         }
 
-        $job = Job::where('id', $id)->where('status', 'open')->firstOrFail();
+        $job = Job::where('id', $id)->where('status', 'open')->first();
+
+        if (!$job)
+            return redirect()->route('maalem.jobs.index')->with('error', 'You are too late! This job has been closed or deleted by the client.');
 
         $alreadyApplied = Application::where('job_id', $id)
             ->where('user_id', auth()->id())
