@@ -105,14 +105,7 @@
             </p>
         </header>
 
-        @if(session('error'))
-            <div class="mb-8 p-4 bg-error-container border border-error/20 rounded-xl flex items-center gap-3 shadow-sm">
-                <span class="material-symbols-outlined text-error">warning</span>
-                <div class="flex-1">
-                    <h3 class="font-bold text-on-error-container text-sm">{{ session('error') }}</h3>
-                </div>
-            </div>
-        @endif
+        <x-alert />
 
         @if ($errors->any())
             <div class="mb-8 p-4 bg-error-container/50 border border-error/10 rounded-xl flex items-start gap-3 shadow-sm">

@@ -18,14 +18,14 @@
             @csrf
             <input type="hidden" name="email" value="{{ $email }}">
 
+            <x-alert />
+
             <div>
                 <label class="block text-gray-700 font-medium mb-1">6-Digit Code</label>
                 <input type="text" name="code" value="{{ old('code') }}" maxlength="6"
                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-2xl tracking-widest @error('code') border-red-500 @enderror"
                        placeholder="______">
-                @error('code')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
+
             </div>
 
             <button type="submit" class="w-full bg-blue-900 text-white py-3 rounded-lg font-bold hover:bg-blue-800 transition">

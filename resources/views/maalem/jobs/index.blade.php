@@ -97,6 +97,8 @@
             <p class="text-secondary text-lg md:text-xl font-medium max-w-2xl">Discover the best jobs in your city. Premium opportunities curated for top-tier professionals.</p>
         </header>
 
+        <x-alert />
+
         <section class="mb-16">
             <div class="bg-surface-container-lowest rounded-2xl p-6 md:p-8 shadow-[0_20px_40px_rgba(25,28,30,0.06)] border border-outline-variant/10">
                 <form method="GET" action="{{ route('maalem.jobs.index') }}" class="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">

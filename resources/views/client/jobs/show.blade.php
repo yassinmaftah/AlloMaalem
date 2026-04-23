@@ -90,18 +90,7 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 mb-20">
 
-        @if(session('success'))
-            <div class="bg-[#e8f5e9] border border-[#c8e6c9] text-[#2e7d32] px-4 py-4 rounded-xl mb-8 flex items-center gap-3 shadow-sm">
-                <span class="material-symbols-outlined">check_circle</span>
-                <span class="font-medium">{{ session('success') }}</span>
-            </div>
-        @endif
-        @if(session('error'))
-            <div class="bg-error-container border border-error/20 text-on-error-container px-4 py-4 rounded-xl mb-8 flex items-center gap-3 shadow-sm">
-                <span class="material-symbols-outlined">error</span>
-                <span class="font-medium">{{ session('error') }}</span>
-            </div>
-        @endif
+        <x-alert />
 
         <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
             <a href="{{ route('client.jobs.index') }}" class="flex items-center gap-2 group cursor-pointer w-max">
@@ -262,7 +251,7 @@
                             @endphp
                             <div class="bg-surface-container-lowest p-5 rounded-3xl shadow-sm hover:shadow-md transition-all border border-outline-variant/10">
                                 <div class="flex gap-4 mb-4">
-                                    <img src="{{ $maalem->avatar ? Storage::url($maalem->avatar) : 'https://ui-avatars.com/api/?name='.urlencode($maalem->name).'&background=00288e&color=fff' }}"
+                                    <img src="{{ $maalem->avatar ? Storage::url($maalem->avatar) : 'https://img.freepik.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3408.jpg?semt=ais_hybrid&w=740&q=80' }}"
                                          alt="{{ $maalem->name }}"
                                          class="w-14 h-14 rounded-2xl object-cover ring-2 ring-surface shadow-sm shrink-0">
                                     <div class="flex-1 min-w-0">
@@ -288,6 +277,8 @@
                                         </form>
                                         <form method="POST" action="{{ route('client.offer.accept', $app->id) }}" class="flex-1 m-0">
                                             @csrf
+                                            <input type="hidden" name="expected_price" value="{{ $app->proposed_price }}">
+
                                             <button type="submit" class="w-full py-2.5 text-xs font-bold text-white bg-primary rounded-xl shadow-md active:scale-95 transition-all">Accept</button>
                                         </form>
                                     @else

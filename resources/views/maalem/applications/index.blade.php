@@ -116,11 +116,7 @@
             </nav>
         </div>
 
-        @if(session('success'))
-            <div class="bg-[#e8f5e9] border border-[#c8e6c9] text-[#2e7d32] px-4 py-4 rounded-xl mb-8 flex items-center gap-3 shadow-sm">
-                <span class="font-medium">{{ session('success') }}</span>
-            </div>
-        @endif
+        <x-alert />
 
         @if($apps->isEmpty())
             <div class="flex flex-col items-center justify-center py-24 text-center">
@@ -194,7 +190,7 @@
                                     @csrf
                                     <div>
                                         <label class="block text-xs font-bold text-secondary mb-1 uppercase tracking-tighter">New Price (MAD)</label>
-                                        <input type="number" name="price" value="{{ $app->proposed_price }}" class="w-full bg-surface-container-low border-0 focus:ring-2 focus:ring-primary rounded-xl px-4 py-3 text-on-surface font-semibold" placeholder="0.00" required/>
+                                        <input type="number" name="price" value="{{ $app->proposed_price }}" class="w-full bg-surface-container-low border-0 focus:ring-2 focus:ring-primary rounded-xl px-4 py-3 text-on-surface font-semibold" placeholder="0.00" />
                                     </div>
                                     <button type="submit" class="w-full bg-primary text-white font-bold py-3 rounded-xl hover:bg-primary-container transition-all shadow-md active:scale-[0.98]">
                                         Reapply

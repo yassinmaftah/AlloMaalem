@@ -118,6 +118,8 @@
                     <p class="text-secondary font-medium">Access your dashboard</p>
                 </div>
 
+                <x-alert />
+
                 <form method="POST" action="{{ route('login') }}" class="space-y-6">
                     @csrf
 
@@ -129,12 +131,9 @@
                                 name="email"
                                 value="{{ old('email') }}"
                                 placeholder="name@example.com"
-                                type="email"
                                  />
                         </div>
-                        @error('email')
-                            <span class="text-red-500 text-sm ml-1">{{ $message }}</span>
-                        @enderror
+
                     </div>
 
                     <div class="space-y-2">
@@ -153,9 +152,7 @@
                                 <span id="eye-icon" class="material-symbols-outlined" data-icon="visibility">visibility</span>
                             </button>
                         </div>
-                        @error('password')
-                            <span class="text-red-500 text-sm ml-1">{{ $message }}</span>
-                        @enderror
+
                     </div>
 
                     <div class="flex items-center space-x-3 ml-1">

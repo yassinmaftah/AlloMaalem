@@ -112,6 +112,8 @@
             <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
 
+                <x-alert />
+
                 <div class="space-y-4 mb-8">
                     <span class="block text-sm font-semibold text-secondary uppercase tracking-widest">Select your profile</span>
                     <div class="grid grid-cols-2 gap-4">
@@ -142,26 +144,26 @@
                     <div class="space-y-2">
                         <label class="block text-sm font-semibold text-on-surface-variant ml-1">Full Name</label>
                         <input name="name" value="{{ old('name') }}" class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3.5 text-on-surface focus:ring-0 focus:bg-surface-container-lowest focus:border-b-2 focus:border-primary transition-all placeholder:text-outline" placeholder="Ahmed Benali" type="text" />
-                        @error('name') <span class="text-red-500 text-sm ml-1">{{ $message }}</span> @enderror
+
                     </div>
                     <div class="space-y-2">
                         <label class="block text-sm font-semibold text-on-surface-variant ml-1">Phone Number</label>
                         <input name="phone" value="{{ old('phone') }}" class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3.5 text-on-surface focus:ring-0 focus:bg-surface-container-lowest focus:border-b-2 focus:border-primary transition-all placeholder:text-outline" placeholder="+212 6XX XXX XXX" type="tel" />
-                        @error('phone') <span class="text-red-500 text-sm ml-1">{{ $message }}</span> @enderror
+
                     </div>
                 </div>
 
                 <div class="space-y-2">
                     <label class="block text-sm font-semibold text-on-surface-variant ml-1">Email Address</label>
                     <input name="email" value="{{ old('email') }}" class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3.5 text-on-surface focus:ring-0 focus:bg-surface-container-lowest focus:border-b-2 focus:border-primary transition-all placeholder:text-outline" placeholder="email@example.com" type="email" />
-                    @error('email') <span class="text-red-500 text-sm ml-1">{{ $message }}</span> @enderror
+
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div class="space-y-2">
                         <label class="block text-sm font-semibold text-on-surface-variant ml-1">Password</label>
                         <input name="password" class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3.5 text-on-surface focus:ring-0 focus:bg-surface-container-lowest focus:border-b-2 focus:border-primary transition-all placeholder:text-outline" placeholder="••••••••" type="password" />
-                        @error('password') <span class="text-red-500 text-sm ml-1">{{ $message }}</span> @enderror
+
                     </div>
                     <div class="space-y-2">
                         <label class="block text-sm font-semibold text-on-surface-variant ml-1">Confirm Password</label>
@@ -172,7 +174,7 @@
                 <div class="space-y-2">
                     <label class="block text-sm font-semibold text-on-surface-variant ml-1">Profile Picture <span class="text-gray-500 font-normal">(Optional)</span></label>
                     <input type="file" name="avatar" accept="image/*" class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3 text-on-surface focus:ring-0 focus:bg-surface-container-lowest focus:border-b-2 focus:border-primary transition-all file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-blue-800"/>
-                    @error('avatar') <span class="text-red-500 text-sm ml-1">{{ $message }}</span> @enderror
+
                 </div>
 
                 <div class="pt-6">

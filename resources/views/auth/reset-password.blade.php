@@ -19,14 +19,14 @@
             <input type="hidden" name="email" value="{{ $email }}">
             <input type="hidden" name="code" value="{{ $code }}">
 
+            <x-alert />
+
             <div>
                 <label class="block text-gray-700 font-medium mb-1">New Password</label>
                 <input type="password" name="password"
                        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 @error('password') border-red-500 @enderror"
                        placeholder="••••••••">
-                @error('password')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
+
             </div>
 
             <div>

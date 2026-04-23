@@ -93,25 +93,7 @@
             <p class="text-secondary font-medium">Manage platform categories and locations.</p>
         </header>
 
-        <div class="space-y-4 mb-10 max-w-3xl">
-            @if(session('success'))
-                <div class="flex items-center gap-3 p-4 bg-[#e8f5e9] text-[#2e7d32] rounded-xl border border-[#c8e6c9]/30">
-                    <span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
-                    <span class="font-medium">{{ session('success') }}</span>
-                </div>
-            @endif
-
-            @if($errors->any())
-                <div class="flex items-start gap-3 p-4 bg-error-container text-on-error-container rounded-xl border border-error/10">
-                    <span class="material-symbols-outlined mt-0.5" data-icon="error">error</span>
-                    <div class="flex flex-col">
-                        @foreach ($errors->all() as $error)
-                            <span class="font-medium">{{ $error }}</span>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-        </div>
+        <x-alert />
 
         <nav class="flex gap-8 mb-12 border-b border-outline-variant/30">
             <button onclick="switchTab('categories')" id="btn-categories" class="tab-btn pb-4 text-primary font-bold border-b-2 border-primary transition-colors">
@@ -132,7 +114,7 @@
                         <div>
                             <label class="block text-sm font-semibold text-secondary mb-2 uppercase tracking-wider" for="category-name">Category Name</label>
                             <input class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3 focus:bg-surface-container-lowest focus:ring-0 focus:border-b-2 focus:border-primary transition-all placeholder:text-outline"
-                                   id="category-name" name="name" placeholder="e.g. Plumber" type="text" required/>
+                                   id="category-name" name="name" placeholder="e.g. Plumber" type="text" />
                         </div>
                         <button class="w-full py-4 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-container active:scale-95 transition-all duration-200" type="submit">
                             Save Category
@@ -158,7 +140,7 @@
                                     <td class="px-6 py-5 font-semibold text-on-surface">{{ $category->name }}</td>
                                     <td class="px-6 py-5 text-right">
                                         <button type="button" onclick="openPopup('{{ route('admin.categories.destroy', $category->id) }}', 'Category')" class="inline-flex items-center gap-2 px-4 py-2 text-error border border-error/40 rounded-lg hover:bg-error-container hover:border-error transition-all group-active:scale-95">
-                                            
+
                                             <span class="text-sm font-bold">Delete</span>
                                         </button>
                                     </td>
@@ -184,7 +166,7 @@
                         <div>
                             <label class="block text-sm font-semibold text-secondary mb-2 uppercase tracking-wider" for="city-name">City Name</label>
                             <input class="w-full bg-surface-container-highest border-none rounded-lg px-4 py-3 focus:bg-surface-container-lowest focus:ring-0 focus:border-b-2 focus:border-primary transition-all placeholder:text-outline"
-                                   id="city-name" name="name" placeholder="e.g. Casablanca" type="text" required/>
+                                   id="city-name" name="name" placeholder="e.g. Casablanca" type="text" />
                         </div>
                         <button class="w-full py-4 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-container active:scale-95 transition-all duration-200" type="submit">
                             Save City

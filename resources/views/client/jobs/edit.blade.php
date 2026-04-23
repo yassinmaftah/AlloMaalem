@@ -105,19 +105,7 @@
             <p class="text-secondary text-lg">Modify your project requirements or update the budget.</p>
         </section>
 
-        @if ($errors->any())
-            <div class="mb-8 p-4 bg-error-container/50 border border-error/10 rounded-xl flex items-start gap-3 shadow-sm">
-                <span class="material-symbols-outlined text-error mt-0.5">warning</span>
-                <div class="flex-1">
-                    <h3 class="font-bold text-on-error-container text-sm mb-1">Please correct the following errors:</h3>
-                    <ul class="text-error text-xs list-disc list-inside space-y-1 opacity-90 font-medium">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        @endif
+        <x-alert />
 
         <form method="POST" action="{{ route('client.jobs.update', $job->id) }}" enctype="multipart/form-data" class="bg-surface-container-lowest rounded-2xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] p-8 md:p-12 border border-outline-variant/10">
             @csrf

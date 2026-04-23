@@ -92,12 +92,7 @@
             <p class="text-secondary mt-2 font-medium">Oversee community health, moderation, and account status across the platform.</p>
         </header>
 
-        @if(session('success'))
-            <div class="mb-8 flex items-center gap-4 bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-xl shadow-sm animate-in fade-in slide-in-from-top-4 duration-500">
-                <span class="material-symbols-outlined text-emerald-600" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                <p class="text-emerald-800 font-medium font-body">{{ session('success') }}</p>
-            </div>
-        @endif
+        <x-alert />
 
         <section class="mb-12">
             <form method="GET" action="{{ route('admin.users.index') }}" class="bg-surface-container-lowest rounded-xl p-6 user-card-shadow flex flex-col md:flex-row gap-4 items-center">

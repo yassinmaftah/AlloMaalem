@@ -121,6 +121,8 @@
             <form action="{{ route('password.send.code') }}" method="POST" class="w-full space-y-6">
                 @csrf
 
+                <x-alert />
+
                 <div class="space-y-2">
                     <label class="font-label text-xs font-semibold text-secondary uppercase tracking-widest ml-1" for="email">Email Address</label>
                     <div class="relative group">
@@ -129,12 +131,9 @@
                                name="email"
                                value="{{ old('email') }}"
                                placeholder="name@example.com"
-                               type="email"
-                               required autofocus />
+                               type="email" />
                     </div>
-                    @error('email')
-                        <span class="text-red-500 text-sm ml-1 block mt-1">{{ $message }}</span>
-                    @enderror
+
                 </div>
 
                 <button type="submit" class="w-full bg-primary text-on-primary py-4 px-6 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-blue-800 shadow-lg shadow-primary/20 transition-all duration-300 active:scale-[0.98] group">

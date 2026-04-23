@@ -119,12 +119,7 @@
             <p class="text-secondary text-lg">Manage your personal information and security.</p>
         </header>
 
-        @if(session('success'))
-            <div class="bg-[#e8f5e9] border border-[#c8e6c9]/30 text-[#2e7d32] px-4 py-3 rounded-xl flex items-center gap-3">
-                <span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
-                <span class="font-medium">{{ session('success') }}</span>
-            </div>
-        @endif
+        <x-alert />
 
         @if(auth()->user()->role !== "admin")
             <section class="space-y-6">
@@ -180,7 +175,7 @@
                         <label class="block text-sm font-semibold text-on-surface-variant">Change Avatar</label>
                         <input type="file" name="avatar" accept="image/*"
                                class="text-sm text-secondary file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-colors cursor-pointer">
-                        @error('avatar') <p class="text-error text-xs mt-1">{{ $message }}</p> @enderror
+
                     </div>
                 </div>
 
@@ -189,14 +184,14 @@
                         <label class="block text-sm font-semibold text-on-surface-variant ml-1">Full Name</label>
                         <input type="text" name="name" value="{{ old('name', $user->name) }}"
                                class="w-full bg-surface-container-highest rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all text-on-surface placeholder-outline-variant @error('name') border-error border-2 @else border-none @enderror">
-                        @error('name') <p class="text-error text-xs mt-1">{{ $message }}</p> @enderror
+
                     </div>
 
                     <div class="space-y-2">
                         <label class="block text-sm font-semibold text-on-surface-variant ml-1">Phone Number</label>
                         <input type="text" name="phone" value="{{ old('phone', $user->phone) }}"
                                class="w-full bg-surface-container-highest rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all text-on-surface placeholder-outline-variant @error('phone') border-error border-2 @else border-none @enderror">
-                        @error('phone') <p class="text-error text-xs mt-1">{{ $message }}</p> @enderror
+
                     </div>
                 </div>
 
@@ -205,7 +200,7 @@
                         <label class="block text-sm font-semibold text-on-surface-variant ml-1">Bio</label>
                         <textarea name="bio" rows="4"
                                   class="w-full bg-surface-container-highest rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all text-on-surface placeholder-outline-variant resize-none @error('bio') border-error border-2 @else border-none @enderror">{{ old('bio', $user->bio) }}</textarea>
-                        @error('bio') <p class="text-error text-xs mt-1">{{ $message }}</p> @enderror
+
                     </div>
                 @endif
 
@@ -230,7 +225,7 @@
                     <label class="block text-sm font-semibold text-on-surface-variant ml-1">Current Password</label>
                     <input type="password" name="current_password"
                            class="w-full bg-surface-container-highest rounded-xl px-4 py-3 focus:ring-2 focus:ring-error focus:bg-surface-container-lowest transition-all text-on-surface placeholder-outline-variant @error('current_password') border-error border-2 @else border-none @enderror" placeholder="••••••••••••">
-                    @error('current_password') <p class="text-error text-xs mt-1">{{ $message }}</p> @enderror
+
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -238,7 +233,7 @@
                         <label class="block text-sm font-semibold text-on-surface-variant ml-1">New Password</label>
                         <input type="password" name="password"
                                class="w-full bg-surface-container-highest rounded-xl px-4 py-3 focus:ring-2 focus:ring-error focus:bg-surface-container-lowest transition-all text-on-surface placeholder-outline-variant @error('password') border-error border-2 @else border-none @enderror" placeholder="Enter new password">
-                        @error('password') <p class="text-error text-xs mt-1">{{ $message }}</p> @enderror
+
                     </div>
 
                     <div class="space-y-2">

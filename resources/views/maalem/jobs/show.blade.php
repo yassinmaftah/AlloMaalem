@@ -101,16 +101,7 @@
             </a>
         </nav>
 
-        @if(session('success'))
-            <div class="bg-[#e8f5e9] border border-[#c8e6c9] text-[#2e7d32] px-4 py-4 rounded-xl mb-8 flex items-center gap-3 shadow-sm">
-                <span class="font-medium">{{ session('success') }}</span>
-            </div>
-        @endif
-        @if(session('error'))
-            <div class="bg-error-container border border-error/20 text-on-error-container px-4 py-4 rounded-xl mb-8 flex items-center gap-3 shadow-sm">
-                <span class="font-medium">{{ session('error') }}</span>
-            </div>
-        @endif
+        <x-alert />
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -196,18 +187,14 @@
                                             <input type="number" name="proposed_price" step="0.01" min="0" value="{{ old('proposed_price') }}"
                                                    class="w-full bg-surface-container-low border-0 border-b-2 border-transparent focus:border-primary focus:ring-0 focus:bg-surface-container-lowest transition-all rounded-t-lg pl-14 py-4 text-on-surface font-semibold placeholder:text-outline-variant @error('proposed_price') border-error bg-error-container/10 @enderror" placeholder="0.00"/>
                                         </div>
-                                        @error('proposed_price')
-                                            <p class="text-error text-xs font-medium mt-1">{{ $message }}</p>
-                                        @enderror
+
                                     </div>
 
                                     <div>
                                         <label class="block text-sm font-semibold text-on-surface-variant mb-2">Message to Client</label>
                                         <textarea name="message" rows="5"
                                                   class="w-full bg-surface-container-low border-0 border-b-2 border-transparent focus:border-primary focus:ring-0 focus:bg-surface-container-lowest transition-all rounded-t-lg p-4 text-on-surface placeholder:text-outline-variant resize-none @error('message') border-error bg-error-container/10 @enderror" placeholder="Describe your experience with similar projects...">{{ old('message') }}</textarea>
-                                        @error('message')
-                                            <p class="text-error text-xs font-medium mt-1">{{ $message }}</p>
-                                        @enderror
+
                                     </div>
 
                                     <button type="submit" class="w-full py-4 mt-2 bg-primary text-on-primary rounded-xl font-headline font-extrabold text-lg shadow-xl shadow-primary/20 hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center group">
