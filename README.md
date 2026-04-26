@@ -1,59 +1,82 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Allo Maalem
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Allo Maalem** est une application web de type "Job Board" développée en Laravel. Elle permet de mettre en relation des Clients (ayant des travaux ou des réparations à effectuer) avec des Maalems (artisans qualifiés). La plateforme intègre un système d'abonnement Premium, une gestion avancée des statuts de candidature, et de multiples sécurités côté serveur pour garantir l'intégrité des mises en relation.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🛠 Technologies Utilisées
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* **Back-end :** PHP 8, Laravel 11
+* **Base de données :** MySQL
+* **Front-end :** Blade (Composants réutilisables), Tailwind CSS, Alpine.js / JavaScript (Transitions et UI dynamique)
+* **API Externe :** Stripe API (Gestion des paiements et abonnements Premium)
+* **Outils de conception :** UML, Figma, Trello, Canva
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 👥 Rôles et Fonctionnalités
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+La plateforme propose une expérience adaptée selon le type d'utilisateur :
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Visiteur (Non Authentifié)
+* Consulter la page d'accueil et le fonctionnement de la plateforme.
+* Parcourir la liste des annonces récentes (titres et descriptions partielles).
+* Créer un compte en choisissant son rôle obligatoire (Client ou Maalem).
 
-## Laravel Sponsors
+### 2. Client (Demandeur de service)
+* **Gestion des Annonces :** Créer des offres de travaux avec détails (Titre, Description, Catégorie, Ville, Budget) et une option "Urgent".
+* **Recrutement Sécurisé :** Consulter les candidatures des Maalems et accepter une offre. Le système gère automatiquement le rejet des autres candidatures.
+* **Évaluation (Review) :** Une fois le travail terminé (`completed`), le client peut attribuer une note (1 à 5 étoiles) et un commentaire au Maalem.
+* **Abonnement Premium :** Possibilité de payer 29$ via Stripe pour obtenir un badge "Vérifié".
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 3. Maalem (Artisan / Prestataire)
+* **Recherche et Filtrage :** Explorer les offres disponibles (`open`) et les filtrer par catégorie et ville (les filtres sont persistants via `Query Strings`).
+* **Postuler aux Annonces :** Soumettre une proposition tarifaire et un message de motivation. 
+* **Limites d'utilisation :** Un compte standard est limité à 3 candidatures "en attente" simultanées et 10 candidatures maximum par mois.
+* **Abonnement Premium :** Possibilité de payer 15$ via Stripe pour devenir "Vérifié" et faire sauter les limites de candidature.
+* **Suivi :** Suivre le statut de ses candidatures (`pending`, `accepted`, `rejected`). Si accepté, les coordonnées du Client sont débloquées.
 
-### Premium Partners
+### 4. Administrateur
+* **Tableau de Bord :** Vue d'ensemble de l'activité de la plateforme.
+* **Rapports Financiers :** Suivi des revenus générés par les paiements Stripe (Historique complet avec Nom, Email, Montant et Date).
+* **Modération :** Bannir des utilisateurs ou révoquer manuellement le statut Premium d'un compte.
+* **Gestion des Référentiels :** Créer, modifier ou supprimer des Catégories de métiers et des Villes.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 🔒 Sécurité et Robustesse Technique (Logique Métier)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Une attention particulière a été portée sur l'intégrité des données et la résolution des failles de concurrence (*Race Conditions*) :
 
-## Code of Conduct
+* **Anti-Modification de Prix :** Vérification stricte en base de données lors de l'acceptation d'une offre. Si un Maalem tente de modifier son prix pendant que le client regarde la page, la transaction est bloquée.
+* **Anti-Double Recrutement :** Verrouillage d'état. Le backend vérifie toujours que l'annonce est au statut `open` avant de valider un Maalem, empêchant ainsi l'assignation de deux artisans au même travail.
+* **Anti-Ghost Application :** Vérification de l'existence et de l'état de l'annonce avant d'insérer une nouvelle candidature pour éviter les erreurs 404 et les candidatures sur des annonces supprimées.
+* **UI/UX :** Utilisation de composants Blade (`<x-alert />`) avec "Flash Sessions" pour des retours visuels immédiats et propres après chaque action.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🚀 Installation en local
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Cloner le repository :
+```bash
+git clone https://github.com/yassinmaftah/AlloMaalem.git
+```
+2. Installer les dépendances PHP et Node :
+```bash
+composer install
+npm install && npm run build
+```
+3. Configurer l'environnement :
+Copier le fichier `.env.example` en `.env` et configurer la base de données ainsi que les clés API Stripe.
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+4. Exécuter les migrations et les seeders :
+```bash
+php artisan migrate --seed
+```
+5. Lancer le serveur local :
+```bash
+php artisan serve
+```
