@@ -17,7 +17,7 @@
 
             <div class="hidden md:flex items-center gap-4 pl-4 border-l border-gray-200">
                 <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://upload.wikimedia.org/wikipedia/commons/0/03/Twitter_default_profile_400x400.png' }}"
+                    <img src="{{ Auth::user()->avatar ? Storage::url(Auth::user()->avatar) : 'https://png.pngtree.com/element_our/20200610/ourmid/pngtree-character-default-avatar-image_2237203.jpg' }}"
                          class="w-8 h-8 rounded-full object-cover border-2 border-blue-100 shadow-sm" alt="avatar">
                     <span class="font-inter text-sm font-bold text-slate-800">{{ Auth::user()->name }}</span>
                 </a>
