@@ -54,11 +54,7 @@
             </div>
         </header>
 
-        @if(session('success'))
-            <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-4 rounded-xl mb-8 flex items-center gap-3 shadow-sm">
-                <span class="font-medium">{{ session('success') }}</span>
-            </div>
-        @endif
+        <x-alert />
 
         <div class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/30 overflow-hidden">
             @if($users->isEmpty())
@@ -94,7 +90,6 @@
                                     <td class="px-6 py-4">
                                         <div class="text-sm text-on-surface font-medium">{{ $user->email }}</div>
                                         <div class="text-xs text-secondary mt-1 flex items-center gap-1">
-                                            <span class="material-symbols-outlined text-[14px]">phone_iphone</span>
                                             {{ $user->phone }}
                                         </div>
                                     </td>
@@ -104,7 +99,7 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-right">
-                                        <form method="POST" action="{{ route('admin.users.revoke', $user->id) }}" onsubmit="return confirm('Are you sure you want to revoke Premium status for {{ $user->name }}?');">
+                                        <form method="POST" action="{{ route('admin.users.revoke', $user->id) }}">
                                             @csrf
                                             <button type="submit" class="text-error hover:text-white hover:bg-error px-3 py-2 rounded-lg text-sm font-bold transition-colors border border-error/20 hover:border-error">
                                                 Revoke
