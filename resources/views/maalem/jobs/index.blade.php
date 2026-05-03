@@ -191,7 +191,7 @@
             </section>
 
             <div class="mt-12">
-                {{ $jobs->links() }}
+                {{ $jobs->withQueryString()->links() }}
             </div>
         @endif
 

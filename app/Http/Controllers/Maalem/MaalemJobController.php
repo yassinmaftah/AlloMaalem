@@ -33,7 +33,7 @@ class MaalemJobController extends Controller
         if ($request->budget)
             $query->where('budget', '>=', $request->budget);
 
-        $jobs = $query->with('category', 'city', 'user')->paginate(9);
+        $jobs = $query->with('category', 'city', 'user')->paginate(9)->withQueryString();
 
         $categories = Category::all();
         $cities = City::all();
