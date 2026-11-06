@@ -1,0 +1,50 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: allomaalem_app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      APP_NAME: "Allo Maalem"
+      APP_ENV: local
+      APP_KEY: base64:DQQ5xH/hGxj26BV+cq/sPbFDBUPeEo67cD1aI2NntwQ=
+      APP_DEBUG: "true"
+      APP_URL: "http://localhost:8000"
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: allomaalem
+      DB_USERNAME: allomaalem
+      DB_PASSWORD: secretpassword
+      MAIL_MAILER: log
+      SESSION_DRIVER: file
+      QUEUE_CONNECTION: sync
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    container_name: allomaalem_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: allomaalem
+      MYSQL_USER: allomaalem
+      MYSQL_PASSWORD: secretpassword
+      MYSQL_ROOT_PASSWORD: rootsecretpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootsecretpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+volumes:
+  db_data:
