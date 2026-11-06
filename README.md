@@ -421,11 +421,6 @@ A complete endpoint specification including request payloads, validation rules, 
 
 * **Developer:** Yassin Maftah
 * **GitHub:** [@yassinmaftah](https://github.com/yassinmaftah)
-* **LinkedIn:** [Yassin Maftah](https://www.linkedin.com/in/yassin-maftah/)
+* **LinkedIn:** [Yassin Maftah](https://www.linkedin.com/in/yassine-maftah-b5793933b/)
 * **Project Repository:** [https://github.com/yassinmaftah/AlloMaalem](https://github.com/yassinmaftah/AlloMaalem)
 
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
